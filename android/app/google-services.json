@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "257308456595",
+    "project_id": "naqi-app-de710",
+    "storage_bucket": "naqi-app-de710.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257308456595:android:0ba048626e2692b35abf66",
+        "android_client_info": {
+          "package_name": "com.example.naqi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257308456595-fn603tvk89lfgrh0ram279825g9t648s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1Htr5CAVGFwi2k3y3AG0Te3vEI2hVRxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257308456595-fn603tvk89lfgrh0ram279825g9t648s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
