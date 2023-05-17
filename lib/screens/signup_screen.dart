@@ -53,7 +53,6 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
 
-
   bool _isSourcePaasword = true;
   bool _isSourceConfirPaasword = true;
   
