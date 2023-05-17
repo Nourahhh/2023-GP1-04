@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "737896249852",
+    "project_id": "fairbase-naqi-app",
+    "storage_bucket": "fairbase-naqi-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737896249852:android:d517b291008da9cd35da79",
+        "android_client_info": {
+          "package_name": "com.example.naqi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737896249852-ev8kcqcmfbk1odkrr60h4s8ns860tm43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGL08HmIE1Rdw8AXu9R3fo2WP2qJkQebE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737896249852-ev8kcqcmfbk1odkrr60h4s8ns860tm43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
