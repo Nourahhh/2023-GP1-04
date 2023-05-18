@@ -85,13 +85,13 @@ class Sensor {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _cardMenu(
-              title: 'CO2',
+              title: 'ثاني أكسيد الكربون',
               reading: readings[2].toString(),
               level: levels[2],
               percent: calculatePercent(readings)[2],
             ),
             _cardMenu(
-              title: 'TVOC',
+              title: 'المركبات العضوية المتطايرة',
               reading: readings[3].round().toString(),
               level: levels[3],
               percent: calculatePercent(readings)[3],
@@ -166,7 +166,7 @@ class Sensor {
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        vertical: 25,
+        vertical: 30,
       ),
       width: 150,
       decoration: BoxDecoration(
