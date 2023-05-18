@@ -11,7 +11,20 @@ NAQI is an Arabic mobile application and IoT hardware that aims to monitor and i
 - Firebase
 - The Things Netwotk
 
+## Getting Started
+To get started with this project, follow these steps:
 
+1. Clone this repository.
+
+git clone https://github.com/Abeer-Aljabri/2023-GP1-04
+
+2. Install the required dependencies by executing the following command from the project directory:
+
+flutter pub get
+
+3. Launch the app on your preferred device or emulator by executing the following command:
+
+flutter run
 
 
 
