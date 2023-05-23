@@ -27,27 +27,7 @@ class Sensor {
               .round();
           tvoc = (data as Map)['uplink_message']['decoded_payload']['tvoc']
               .round();
-        } else {
-          if (co2 == 0) {
-            return Center(
-              child: Container(
-                  width: 16, height: 16, child: CircularProgressIndicator()),
-            );
-          }
         }
-      } else {
-        if (co2 == 0)
-          return Center(
-            child: Container(
-                width: 16, height: 16, child: CircularProgressIndicator()),
-          );
-      }
-    } else {
-      if (co2 == 0) {
-        return Center(
-          child: Container(
-              width: 16, height: 16, child: CircularProgressIndicator()),
-        );
       }
     }
     List<int> readings = [
