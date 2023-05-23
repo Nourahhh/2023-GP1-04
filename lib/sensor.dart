@@ -1,7 +1,6 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:naqi_app/fan.dart';
 
 class Sensor {
   int co2 = 0;
@@ -36,6 +35,7 @@ class Sensor {
       co2,
       tvoc,
     ];
+
     return readings;
   }
 
