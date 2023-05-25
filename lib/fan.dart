@@ -5,11 +5,11 @@ class Fan {
   String status = 'off';
   Future<void> sendDownlink(String payload) async {
     final String url =
-        'https://eu1.cloud.thethings.network/api/v3/as/applications/naqi-indoor/webhooks/indoor-webhook/devices/controller/down/replace';
+        'https://eu1.cloud.thethings.network/api/v3/as/applications/naqi-indoor-controller/webhooks/controller-webhook/devices/controller/down/replace';
 
     Map<String, String> headers = {
       'Authorization':
-          'Bearer NNSXS.PVO4DHCCM5RAEZYBF5GPSXYMXPNVMLWNDM4B3HI.5TSP2CMJXH2VHBOIUONHZ2ZX6PRKNSZK4RF3BWUM4ELAN7WPW55Q',
+          'Bearer NNSXS.S5AHBXSHVE6LDQBI5SI7WTDZKZTVE7WLYAGY6BY.GGB427AY2WJVBMZHZVLXZ3GGSDAJDRAHTGVDZBYQZPJDTPHB457A',
       'Content-Type': 'application/json',
       'User-Agent': 'my-integration/my-integration-version',
     };
@@ -34,12 +34,12 @@ class Fan {
   }
 
   void turnOn() {
-    sendDownlink('');
+    sendDownlink('AwER');
     status = 'on';
   }
 
   void turnOff() {
-    sendDownlink('');
+    sendDownlink('AwAA');
     status = 'off';
   }
 }
