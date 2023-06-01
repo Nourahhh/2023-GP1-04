@@ -12,7 +12,7 @@ class HomeSceen extends StatefulWidget {
 
 class _HomeSceenState extends State<HomeSceen>
     with AutomaticKeepAliveClientMixin {
-  IndoorPage r = IndoorPage();
+  IndoorPage indoorPage = IndoorPage();
   int index = 1;
   late final pages = [
     //هنا صفحة حسابي
@@ -78,7 +78,7 @@ class _HomeSceenState extends State<HomeSceen>
       ),
     ),
     //هنا صفحة داخلي
-    IndoorPage(),
+    indoorPage,
     //هنا صفحة خارجي
     Center(child: Text('خارجي', style: TextStyle(fontSize: 37))),
     //هنا صفحة التقارير
@@ -178,4 +178,3 @@ class _HomeSceenState extends State<HomeSceen>
   @override
   bool get wantKeepAlive => true;
 }
-
