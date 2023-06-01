@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Fan {
-  String status = 'off';
+  int status = 0;
   Future<void> sendDownlink(String payload) async {
     final String url =
         'https://eu1.cloud.thethings.network/api/v3/as/applications/naqi-indoor-controller/webhooks/controller-webhook/devices/controller/down/replace';
@@ -35,11 +35,11 @@ class Fan {
 
   void turnOn() {
     sendDownlink('AwER');
-    status = 'on';
+    status = 1;
   }
 
   void turnOff() {
     sendDownlink('AwAA');
-    status = 'off';
+    status = 0;
   }
 }

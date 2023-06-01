@@ -1,7 +1,8 @@
-import 'package:naqi_app/http_handler.dart';
-import 'dart:convert';
 import 'package:naqi_app/sensor.dart';
+import 'dart:convert';
+import 'package:naqi_app/indoorAirQuality.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class IndoorPage extends StatefulWidget {
   IndoorPage({Key? key}) : super(key: key);
@@ -12,14 +13,15 @@ class IndoorPage extends StatefulWidget {
 
 class _IndoorPageState extends State<IndoorPage>
     with AutomaticKeepAliveClientMixin {
-  HTTPHandler httpHandler = HTTPHandler();
-  Sensor sensorReadings = Sensor();
+  @override
+  bool get wantKeepAlive => true;
+  Sensor sensor = Sensor();
+  IndoorAirQuality sensorReadings = IndoorAirQuality();
 
   Widget build(BuildContext context) {
     super.build(context);
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 232, 245, 248),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
@@ -40,7 +42,7 @@ class _IndoorPageState extends State<IndoorPage>
                       const SizedBox(height: 16),
                       const SizedBox(height: 48),
                       StreamBuilder<String>(
-                          stream: httpHandler.getReadings(),
+                          stream: sensor.getReadings(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               print("no data");
@@ -49,7 +51,10 @@ class _IndoorPageState extends State<IndoorPage>
                               var data = jsonDecode(snapshot.data.toString());
                               List<int> readings =
                                   sensorReadings.readData(data);
-                              return sensorReadings.showData(readings);
+                              // return sensorReadings.showData(readings);
+                              List<String> levels =
+                                  sensorReadings.calculateLevel(readings);
+                              return sensorReadings.showData(readings, context);
                             }
                           }),
                     ],
@@ -62,7 +67,4 @@ class _IndoorPageState extends State<IndoorPage>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
