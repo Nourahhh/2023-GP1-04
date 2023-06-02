@@ -1,17 +1,20 @@
 //import 'dart:js';
+//import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:naqi_app/fan.dart';
+import 'package:naqi_app/controller.dart';
 
 class IndoorAirQuality {
   int co2 = 0;
   var temp = 0;
   var hum = 0;
   var tvoc = 0;
-  Fan fan = Fan();
+
+  Controller controller = Controller();
 
   dynamic readData(dynamic data) {
+    controller.checkAirQualityData(co2);
     if (data.containsKey('uplink_message')) {
       var paylaod = (data as Map)['uplink_message'];
 
@@ -22,6 +25,7 @@ class IndoorAirQuality {
           print('yes');
           co2 = ((data as Map)['uplink_message']['decoded_payload']['co2'])
               .round();
+          controller.checkAirQualityData(co2);
 
           temp = (data as Map)['uplink_message']['decoded_payload']
                   ['temperature']
