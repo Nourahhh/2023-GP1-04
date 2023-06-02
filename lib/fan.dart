@@ -1,8 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Fan {
-  int status = 0;
   Future<void> sendDownlink(String payload) async {
     final String url =
         'https://eu1.cloud.thethings.network/api/v3/as/applications/naqi-indoor-controller/webhooks/controller-webhook/devices/controller/down/replace';
@@ -35,11 +36,11 @@ class Fan {
 
   void turnOn() {
     sendDownlink('AwER');
-    status = 1;
+    FirebaseDatabase.instance.reference().child("Fan").update({"Status": 1});
   }
 
   void turnOff() {
     sendDownlink('AwAA');
-    status = 0;
+    FirebaseDatabase.instance.reference().child("Fan").update({"Status": 0});
   }
 }
