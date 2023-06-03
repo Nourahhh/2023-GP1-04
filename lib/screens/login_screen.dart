@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
-//button style
+  //button style
   final ButtonStyle buttonPrimary = ElevatedButton.styleFrom(
     minimumSize: Size(345, 55),
     backgroundColor: Color.fromARGB(255, 43, 138, 159),
@@ -32,10 +37,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    subscription.cancel();
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
   }
+
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  @override
+  void initState() {
+    getConnectivity();
+    super.initState();
+  }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+            (ConnectivityResult result) async{
+              isDeviceConnected = await InternetConnectionChecker().hasConnection;
+              if (!isDeviceConnected && isAlertSet == false) {
+                showDialogBox();
+                setState(() => isAlertSet =true);
+
+
+              }
+            },
+          );
+          
 
   @override
   Widget build(BuildContext context) {
@@ -108,11 +138,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.text,
                     obscureText: _isSourceLoginPaasword,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        labelText: " كلمة المرور",
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: togglePassword(),),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      labelText: " كلمة المرور",
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: togglePassword(),
+                    ),
 
                     // ignore: body_might_complete_normally_nullable
                     validator: (value) {
@@ -145,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: _passwordController.text.trim(),
                           )
                               // ignore: body_might_complete_normally_catch_error
-                              .catchError((err)  {
+                              .catchError((err) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -205,18 +236,33 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-    
   }
-   Widget togglePassword() {
-    return IconButton(onPressed: (){
-      setState(() {
-        _isSourceLoginPaasword = !_isSourceLoginPaasword;
-      });
-      
 
-    }, icon: _isSourceLoginPaasword? Icon(Icons.visibility): Icon(Icons.visibility_off),
-    color: Colors.grey,);
+  Widget togglePassword() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isSourceLoginPaasword = !_isSourceLoginPaasword;
+        });
+      },
+      icon: _isSourceLoginPaasword
+          ? Icon(Icons.visibility)
+          : Icon(Icons.visibility_off),
+      color: Colors.grey,
+    );
   }
-  
-  
+  showDialogBox() => showCupertinoDialog<String>(
+    context: context, 
+    builder: (BuildContext content) => CupertinoAlertDialog(
+      title: Text('لا يوجد اتصال بالانترنت'),
+      content: Text("الرجاء التحقق من اتصال الانترنت"),
+      actions: <Widget> [
+        TextButton(
+         onPressed: () {},
+         child: Text('حسنا'),
+          ),
+
+      ],
+    ),
+  );
 }
