@@ -258,7 +258,15 @@ class _LoginScreenState extends State<LoginScreen> {
       content: Text("الرجاء التحقق من اتصال الانترنت"),
       actions: <Widget> [
         TextButton(
-         onPressed: () {},
+         onPressed: () async{
+          Navigator.pop(context, 'Cancel');
+          setState(() => isAlertSet = false);
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+         },
          child: Text('حسنا'),
           ),
 
