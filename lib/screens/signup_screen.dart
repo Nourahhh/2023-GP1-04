@@ -1,8 +1,12 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:flutter/cupertino.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -58,8 +62,33 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isSourceConfirPaasword = true;
   
 
+// to connection
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+
+   @override
+  void initState() {
+    getConnectivity();
+    super.initState();
+  }
+
+    getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+            (ConnectivityResult result) async{
+              isDeviceConnected = await InternetConnectionChecker().hasConnection;
+              if (!isDeviceConnected && isAlertSet == false) {
+                showDialogBox();
+                setState(() => isAlertSet =true);
+
+
+              }
+            },
+          );
+          
   @override
   void dispose() {
+     subscription.cancel();
     super.dispose();
     _firstNameContoroller.dispose();
     _lasttNameContoroller.dispose();
@@ -68,6 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -379,5 +409,28 @@ class _SignupScreenState extends State<SignupScreen> {
     }, icon: _isSourceConfirPaasword? Icon(Icons.visibility): Icon(Icons.visibility_off),
     color: Colors.grey,);
   }
+
+    showDialogBox() => showCupertinoDialog<String>(
+    context: context, 
+    builder: (BuildContext content) => CupertinoAlertDialog(
+      title: Text('لا يوجد اتصال بالانترنت'),
+      content: Text("الرجاء التحقق من اتصال الانترنت"),
+      actions: <Widget> [
+        TextButton(
+         onPressed: () async{
+          Navigator.pop(context, 'Cancel');
+          setState(() => isAlertSet = false);
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+         },
+         child: Text('حسنا'),
+          ),
+
+      ],
+    ),
+  );
 }
 
