@@ -26,4 +26,16 @@ class FirebaseService {
     }
     return status;
   }
+
+  Future<String> isSwitchOn() async {
+    String isSwitchOn = '';
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('Fan/isSwitchOn').get();
+    if (snapshot.exists) {
+      isSwitchOn = snapshot.value.toString();
+    } else {
+      print('No data available.');
+    }
+    return isSwitchOn;
+  }
 }

@@ -43,4 +43,11 @@ class Fan {
     sendDownlink('AwAA');
     FirebaseDatabase.instance.reference().child("Fan").update({"Status": 0});
   }
+
+  void updateSwitch(int isSwitchOn) {
+    FirebaseDatabase.instance
+        .reference()
+        .child("Fan")
+        .update({"isSwitchOn": isSwitchOn});
+  }
 }
