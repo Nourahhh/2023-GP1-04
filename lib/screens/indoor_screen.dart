@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:naqi_app/indoorAirQuality.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:naqi_app/fan.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class IndoorPage extends StatefulWidget {
   IndoorPage({Key? key}) : super(key: key);
@@ -14,9 +16,22 @@ class IndoorPage extends StatefulWidget {
 class _IndoorPageState extends State<IndoorPage>
     with AutomaticKeepAliveClientMixin {
   @override
+  void initState() {
+    super.initState();
+    //sensor.getReadings();
+  }
+
+  @override
   bool get wantKeepAlive => true;
   Sensor sensor = Sensor();
   IndoorAirQuality sensorReadings = IndoorAirQuality();
+  static bool isSwitchOn = false;
+
+  Fan fan = Fan();
+
+  static bool getIsSwitchOn() {
+    return isSwitchOn;
+  }
 
   Widget build(BuildContext context) {
     super.build(context);
@@ -51,12 +66,55 @@ class _IndoorPageState extends State<IndoorPage>
                               var data = jsonDecode(snapshot.data.toString());
                               List<int> readings =
                                   sensorReadings.readData(data);
-                              // return sensorReadings.showData(readings);
+
                               List<String> levels =
                                   sensorReadings.calculateLevel(readings);
                               return sensorReadings.showData(readings, context);
                             }
                           }),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 10),
+                            child: Text(
+                              'تشغيل/إيقاف المروحة ',
+                              // style: GoogleFonts.robotoCondensed(
+                              //  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: // Define a boolean variable to keep track of switch state
+
+// Define the switch
+                                Switch(
+                              activeColor:
+                                  const Color.fromARGB(255, 255, 255, 255),
+                              activeTrackColor: const Color(0xff45A1B6),
+                              inactiveThumbColor: Colors.blueGrey.shade600,
+                              inactiveTrackColor: Colors.grey.shade400,
+                              splashRadius: 50.0,
+                              value:
+                                  isSwitchOn, // Use the boolean variable to set switch state
+                              onChanged: (value) => setState(() {
+                                if (value) {
+                                  fan.turnOn();
+                                  fan.updateSwitch(1);
+                                } else {
+                                  fan.turnOff();
+                                  fan.updateSwitch(0);
+                                }
+                                isSwitchOn =
+                                    value; // Update the boolean variable
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

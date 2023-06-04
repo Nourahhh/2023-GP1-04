@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:naqi_app/screens/indoor_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:naqi_app/controller.dart';
+import 'package:naqi_app/sensor.dart';
 
 class HomeSceen extends StatefulWidget {
   const HomeSceen({super.key});
@@ -12,7 +15,20 @@ class HomeSceen extends StatefulWidget {
 
 class _HomeSceenState extends State<HomeSceen>
     with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
+  Controller controller = Controller();
   IndoorPage indoorPage = IndoorPage();
+  Sensor sensor = Sensor();
+
   int index = 1;
   late final pages = [
     //هنا صفحة حسابي
