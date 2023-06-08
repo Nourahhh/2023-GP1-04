@@ -29,10 +29,6 @@ class _IndoorPageState extends State<IndoorPage>
 
   Fan fan = Fan();
 
-  static bool getIsSwitchOn() {
-    return isSwitchOn;
-  }
-
   Widget build(BuildContext context) {
     super.build(context);
 
@@ -69,7 +65,8 @@ class _IndoorPageState extends State<IndoorPage>
 
                               List<String> levels =
                                   sensorReadings.calculateLevel(readings);
-                              return sensorReadings.showData(readings, context);
+                              return sensorReadings.viewIndoorAirQuality(
+                                  readings, context);
                             }
                           }),
                       SizedBox(

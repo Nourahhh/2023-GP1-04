@@ -6,7 +6,7 @@ import 'package:naqi_app/controller.dart';
 import 'package:naqi_app/fan.dart';
 
 class IndoorAirQuality {
-  int co2 = 0;
+  var co2 = 0;
   var temp = 0;
   var hum = 0;
   var tvoc = 0;
@@ -42,7 +42,7 @@ class IndoorAirQuality {
     return readings;
   }
 
-  Widget showData(List<int> readings, context) {
+  Widget viewIndoorAirQuality(List<int> readings, context) {
     List<String> levels = calculateLevel(readings);
     return Column(
       children: [
@@ -54,14 +54,14 @@ class IndoorAirQuality {
               title: 'درجة الحرارة',
               reading: readings[0].toString() + '\u00B0',
               level: levels[0],
-              percent: calculatePercent(readings)[0],
+              percent: calculatePercentege(readings)[0],
             ),
             _cardMenu(
               context: context,
               title: 'مستوى الرطوبة',
               reading: readings[1].toString() + '%',
               level: levels[1],
-              percent: calculatePercent(readings)[1],
+              percent: calculatePercentege(readings)[1],
             ),
           ],
         ),
@@ -74,14 +74,14 @@ class IndoorAirQuality {
               title: 'ثاني أكسيد الكربون',
               reading: readings[2].toString(),
               level: levels[2],
-              percent: calculatePercent(readings)[2],
+              percent: calculatePercentege(readings)[2],
             ),
             _cardMenu(
               context: context,
               title: 'المركبات العضوية المتطايرة',
               reading: readings[3].round().toString(),
               level: levels[3],
-              percent: calculatePercent(readings)[3],
+              percent: calculatePercentege(readings)[3],
             ),
           ],
         ),
@@ -89,7 +89,7 @@ class IndoorAirQuality {
     );
   }
 
-  List<double> calculatePercent(List<int> readings) {
+  List<double> calculatePercentege(List<int> readings) {
     List<double> percentages = [];
     // temp percentage
     percentages.add(readings[0] / 40);

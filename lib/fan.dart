@@ -8,6 +8,7 @@ class Fan {
     final String url =
         'https://eu1.cloud.thethings.network/api/v3/as/applications/naqi-indoor-controller/webhooks/controller-webhook/devices/controller/down/replace';
 
+    // Define header content
     Map<String, String> headers = {
       'Authorization':
           'Bearer NNSXS.S5AHBXSHVE6LDQBI5SI7WTDZKZTVE7WLYAGY6BY.GGB427AY2WJVBMZHZVLXZ3GGSDAJDRAHTGVDZBYQZPJDTPHB457A',
@@ -15,6 +16,7 @@ class Fan {
       'User-Agent': 'my-integration/my-integration-version',
     };
 
+    //Define body content
     Map<String, dynamic> body = {
       'downlinks': [
         {
@@ -24,7 +26,7 @@ class Fan {
         }
       ],
     };
-
+    //Send http request
     String jsonBody = json.encode(body);
     http.Response response = await http.post(
       Uri.parse(url),
@@ -33,6 +35,10 @@ class Fan {
     );
     print(response.body);
   }
+
+  //void setUpController() {
+  // sendDownlink('AQAAAQ==');
+  //}
 
   void turnOn() {
     sendDownlink('AwER');
