@@ -12,6 +12,7 @@ class Controller {
   IndoorPage i = IndoorPage();
 
   void checkAirQualityData(var co2) {
+    // Get fan status and switch status from databse
     Future<String> fanStatus = firebase.getStatus();
     Future<String> fanSwitch = firebase.isSwitchOn();
 
@@ -19,13 +20,13 @@ class Controller {
       status = value;
       fanSwitch.then((value) {
         isSwitchOn = value;
+        // check CO2 and fan status
         if ((co2 > 1000) & (status == '0')) {
           fan.turnOn();
           sendNotification();
-          print('on');
+          // check CO2 and fan status and switch status
         } else if ((co2 <= 1000) & (status == '1') & (isSwitchOn == '0')) {
           fan.turnOff();
-          print('off');
         }
       });
     });
@@ -37,7 +38,7 @@ class Controller {
           id: 10,
           channelKey: "default_channel",
           title: "تنبيه!",
-          body: "مستوى ثاني أكسيد الكربون مرتفع!"),
+          body: "مستوى ثاني أكسيد الكربون مرتفع! سيتم تشغيل المروحة"),
     );
   }
 }

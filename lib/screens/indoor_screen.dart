@@ -18,7 +18,6 @@ class _IndoorPageState extends State<IndoorPage>
   @override
   void initState() {
     super.initState();
-    //sensor.getReadings();
   }
 
   @override
