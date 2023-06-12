@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:naqi_app/controller.dart';
-import 'package:naqi_app/fan.dart';
 
 class IndoorAirQuality {
   var co2 = 0;
@@ -97,10 +96,10 @@ class IndoorAirQuality {
     // humidity percentage
     percentages.add(readings[1] / 100);
 
-    //co2 percantsge
+    // co2 percantsge
     percentages.add(readings[2] / 2000);
 
-    //tvoc percentage
+    // tvoc percentage
     percentages.add(readings[3] / 300);
 
     return percentages;
@@ -108,7 +107,7 @@ class IndoorAirQuality {
 
   List<String> calculateLevel(List<int> readings) {
     List<String> levels = [];
-    //temprature level
+    // temprature level
     if (readings[0] < 10) {
       levels.add("بارد");
     } else if ((readings[0] >= 10) & (readings[0] < 28)) {
@@ -116,7 +115,7 @@ class IndoorAirQuality {
     } else if (readings[0] >= 28) {
       levels.add("حار");
     }
-    //humidity level
+    // humidity level
     if (readings[1] < 30) {
       levels.add("منخفض");
     } else if ((readings[1] >= 30) & (readings[1] <= 60)) {
@@ -124,7 +123,7 @@ class IndoorAirQuality {
     } else if (readings[1] > 60) {
       levels.add("عالي");
     }
-    //co2 level
+    // co2 level
     if (readings[2] <= 1000) {
       levels.add("ممتاز");
     } else if ((readings[2] > 1000) & (readings[2] < 1500)) {
@@ -132,7 +131,7 @@ class IndoorAirQuality {
     } else if (readings[2] >= 1500) {
       levels.add("ملوث جدا");
     }
-    //tvoc level
+    // tvoc level
     if (readings[3] <= 100) {
       levels.add("ممتاز");
     } else if ((readings[3] > 100) & (readings[3] < 200)) {
