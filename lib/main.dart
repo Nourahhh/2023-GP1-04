@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:naqi_app/screens/signup_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:naqi_app/sensor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +21,7 @@ void main() async {
         ),
       ],
       debug: true);
+
   runApp(const MyApp());
 }
 
