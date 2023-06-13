@@ -23,7 +23,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  
 
   //button style
   final ButtonStyle buttonPrimary = ElevatedButton.styleFrom(
@@ -49,46 +48,41 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   bool validateStructure(String value) {
-
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(value);
   }
 
-
 // to see password
   bool _isSourcePaasword = true;
   bool _isSourceConfirPaasword = true;
-  
 
 // to connection
   late StreamSubscription subscription;
   var isDeviceConnected = false;
   bool isAlertSet = false;
 
-   @override
+  @override
   void initState() {
     getConnectivity();
     super.initState();
   }
 
-    getConnectivity() =>
+  getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
-            (ConnectivityResult result) async{
-              isDeviceConnected = await InternetConnectionChecker().hasConnection;
-              if (!isDeviceConnected && isAlertSet == false) {
-                showDialogBox();
-                setState(() => isAlertSet =true);
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
 
-
-              }
-            },
-          );
-          
   @override
   void dispose() {
-     subscription.cancel();
+    subscription.cancel();
     super.dispose();
     _firstNameContoroller.dispose();
     _lasttNameContoroller.dispose();
@@ -97,7 +91,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -195,11 +188,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     validator: (String? value) {
                       if (value!.isEmpty) {
                         return 'الرجاء كتابة البريد الإلكتروني ';
-                      } else if (value.length < 5) {
-                        return 'الرجاء كتابة البريد الإلكتروني بشكل صحيح';
                       } else if ((value.isNotEmpty) &&
-                          !RegExp(r"^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)$")
-                              .hasMatch(value)) {
+                          !RegExp(r'\w+@\w+\.\w+').hasMatch(value)) {
                         return "الرجاء اخال عنوان بريد إلكتروني صالح";
                       }
 
@@ -222,14 +212,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             borderRadius: BorderRadius.circular(12)),
                         labelText: " كلمة المرور",
                         prefixIcon: Icon(Icons.lock),
-                        suffixIcon: togglePasswprd()
-                        ),
+                        suffixIcon: togglePasswprd()),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'برجاء ادخال كلمة المرور ';
                       } else if (value.length < 5 ||
                           !validateStructure(value)) {
-                       return 'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*';
+                        return 'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*';
                       }
                       return null;
                     },
@@ -247,12 +236,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     keyboardType: TextInputType.text,
                     obscureText: _isSourceConfirPaasword,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        labelText: " تأكيد كلمة المرور",
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: toggleConfirmPasswprd(),),
-                        
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      labelText: " تأكيد كلمة المرور",
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: toggleConfirmPasswprd(),
+                    ),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'الرجاء اعادة كتابة كلمة المرور';
@@ -323,7 +312,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                         style: TextStyle(fontSize: 20),
                                       )).show().then((value) {
                                     Navigator.of(context).pushNamed('/');
-                                   
                                   });
                                 });
                                 // Navigator.of(context).pushNamed('/');
@@ -387,50 +375,55 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
+
   Widget togglePasswprd() {
-    return IconButton(onPressed: (){
-      setState(() {
-        _isSourcePaasword = !_isSourcePaasword;
-      });
-      
-
-    }, icon: _isSourcePaasword? Icon(Icons.visibility): Icon(Icons.visibility_off),
-    color: Colors.grey,);
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isSourcePaasword = !_isSourcePaasword;
+        });
+      },
+      icon: _isSourcePaasword
+          ? Icon(Icons.visibility)
+          : Icon(Icons.visibility_off),
+      color: Colors.grey,
+    );
   }
 
-
-    Widget toggleConfirmPasswprd() {
-    return IconButton(onPressed: (){
-      setState(() {
-        _isSourceConfirPaasword = !_isSourceConfirPaasword;
-      });
-      
-
-    }, icon: _isSourceConfirPaasword? Icon(Icons.visibility): Icon(Icons.visibility_off),
-    color: Colors.grey,);
+  Widget toggleConfirmPasswprd() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isSourceConfirPaasword = !_isSourceConfirPaasword;
+        });
+      },
+      icon: _isSourceConfirPaasword
+          ? Icon(Icons.visibility)
+          : Icon(Icons.visibility_off),
+      color: Colors.grey,
+    );
   }
 
-    showDialogBox() => showCupertinoDialog<String>(
-    context: context, 
-    builder: (BuildContext content) => CupertinoAlertDialog(
-      title: Text('لا يوجد اتصال بالانترنت'),
-      content: Text("الرجاء التحقق من اتصال الانترنت"),
-      actions: <Widget> [
-        TextButton(
-         onPressed: () async{
-          Navigator.pop(context, 'Cancel');
-          setState(() => isAlertSet = false);
-          isDeviceConnected = await InternetConnectionChecker().hasConnection;
-          if (!isDeviceConnected) {
-            showDialogBox();
-            setState(() => isAlertSet = true);
-          }
-         },
-         child: Text('حسنا'),
-          ),
-
-      ],
-    ),
-  );
+  showDialogBox() => showCupertinoDialog<String>(
+        context: context,
+        builder: (BuildContext content) => CupertinoAlertDialog(
+          title: Text('لا يوجد اتصال بالانترنت'),
+          content: Text("الرجاء التحقق من اتصال الانترنت"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected =
+                    await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: Text('حسنا'),
+            ),
+          ],
+        ),
+      );
 }
-
