@@ -77,6 +77,10 @@ class _IndoorPageState extends State<IndoorPage>
                                 left: 20, right: 20, top: 10),
                             child: Text(
                               'تشغيل/إيقاف المروحة ',
+                              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
                             ),
                           ),
                           Padding(
