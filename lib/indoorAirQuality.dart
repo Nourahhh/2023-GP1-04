@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:naqi_app/controller.dart';
-import 'package:naqi_app/fan.dart';
 
 class IndoorAirQuality {
   var co2 = 0;
@@ -44,44 +43,78 @@ class IndoorAirQuality {
 
   Widget viewIndoorAirQuality(List<int> readings, context) {
     List<String> levels = calculateLevel(readings);
+    Map<String, Color> airQuality_color = calculateAirQuality(levels);
+    String airQuality = airQuality_color.keys.first;
+    Color color = airQuality_color.values.first;
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _cardMenu(
-              context: context,
-              title: 'درجة الحرارة',
-              reading: readings[0].toString() + '\u00B0',
-              level: levels[0],
-              percent: calculatePercentege(readings)[0],
+            Text(
+              "مستوى جودة الهواء: ",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            _cardMenu(
-              context: context,
-              title: 'مستوى الرطوبة',
-              reading: readings[1].toString() + '%',
-              level: levels[1],
-              percent: calculatePercentege(readings)[1],
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: color,
+              ),
+              padding: EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20),
+              child: Text(
+                airQuality,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        const SizedBox(height: 20),
+        Column(
           children: [
-            _cardMenu(
-              context: context,
-              title: 'ثاني أكسيد الكربون',
-              reading: readings[2].toString(),
-              level: levels[2],
-              percent: calculatePercentege(readings)[2],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'درجة الحرارة',
+                  reading: readings[0].toString() + '\u00B0',
+                  level: levels[0],
+                  percent: calculatePercentege(readings)[0],
+                ),
+                _cardMenu(
+                  context: context,
+                  title: 'مستوى الرطوبة',
+                  reading: readings[1].toString() + '%',
+                  level: levels[1],
+                  percent: calculatePercentege(readings)[1],
+                ),
+              ],
             ),
-            _cardMenu(
-              context: context,
-              title: 'المركبات العضوية المتطايرة',
-              reading: readings[3].round().toString(),
-              level: levels[3],
-              percent: calculatePercentege(readings)[3],
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'ثاني أكسيد الكربون',
+                  reading: readings[2].toString(),
+                  level: levels[2],
+                  percent: calculatePercentege(readings)[2],
+                ),
+                _cardMenu(
+                  context: context,
+                  title: 'المركبات العضوية المتطايرة',
+                  reading: readings[3].round().toString(),
+                  level: levels[3],
+                  percent: calculatePercentege(readings)[3],
+                ),
+              ],
             ),
           ],
         ),
@@ -97,10 +130,10 @@ class IndoorAirQuality {
     // humidity percentage
     percentages.add(readings[1] / 100);
 
-    //co2 percantsge
+    // co2 percantsge
     percentages.add(readings[2] / 2000);
 
-    //tvoc percentage
+    // tvoc percentage
     percentages.add(readings[3] / 300);
 
     return percentages;
@@ -108,7 +141,7 @@ class IndoorAirQuality {
 
   List<String> calculateLevel(List<int> readings) {
     List<String> levels = [];
-    //temprature level
+    // temprature level
     if (readings[0] < 10) {
       levels.add("بارد");
     } else if ((readings[0] >= 10) & (readings[0] < 28)) {
@@ -116,7 +149,7 @@ class IndoorAirQuality {
     } else if (readings[0] >= 28) {
       levels.add("حار");
     }
-    //humidity level
+    // humidity level
     if (readings[1] < 30) {
       levels.add("منخفض");
     } else if ((readings[1] >= 30) & (readings[1] <= 60)) {
@@ -124,7 +157,7 @@ class IndoorAirQuality {
     } else if (readings[1] > 60) {
       levels.add("عالي");
     }
-    //co2 level
+    // co2 level
     if (readings[2] <= 1000) {
       levels.add("ممتاز");
     } else if ((readings[2] > 1000) & (readings[2] < 1500)) {
@@ -132,7 +165,7 @@ class IndoorAirQuality {
     } else if (readings[2] >= 1500) {
       levels.add("ملوث جدا");
     }
-    //tvoc level
+    // tvoc level
     if (readings[3] <= 100) {
       levels.add("ممتاز");
     } else if ((readings[3] > 100) & (readings[3] < 200)) {
@@ -141,6 +174,21 @@ class IndoorAirQuality {
       levels.add("ملوث جدا");
     }
     return levels;
+  }
+
+  Map<String, Color> calculateAirQuality(List<String> levels) {
+    String airQuality = 'ممتاز';
+    for (String level in levels) {
+      if (level == "ملوث جدا") {
+        airQuality = level;
+        return {airQuality: Colors.red};
+      }
+      if (level == "ملوث") {
+        airQuality = level;
+        return {airQuality: Colors.orange};
+      }
+    }
+    return {airQuality: Colors.green};
   }
 
   Widget _cardMenu({

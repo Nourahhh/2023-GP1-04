@@ -18,7 +18,6 @@ class _IndoorPageState extends State<IndoorPage>
   @override
   void initState() {
     super.initState();
-    //sensor.getReadings();
   }
 
   @override
@@ -35,7 +34,7 @@ class _IndoorPageState extends State<IndoorPage>
     return Scaffold(
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(top: 18, left: 24, right: 24),
+          margin: const EdgeInsets.only(top: 0, left: 24, right: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +49,7 @@ class _IndoorPageState extends State<IndoorPage>
                   child: ListView(
                     physics: const BouncingScrollPhysics(),
                     children: [
-                      const SizedBox(height: 16),
-                      const SizedBox(height: 48),
+                      const SizedBox(height: 26),
                       StreamBuilder<String>(
                           stream: sensor.getReadings(),
                           builder: (context, snapshot) {
@@ -70,7 +68,7 @@ class _IndoorPageState extends State<IndoorPage>
                             }
                           }),
                       SizedBox(
-                        height: 20,
+                        height: 6,
                       ),
                       Row(
                         children: [
@@ -79,8 +77,6 @@ class _IndoorPageState extends State<IndoorPage>
                                 left: 20, right: 20, top: 10),
                             child: Text(
                               'تشغيل/إيقاف المروحة ',
-                              // style: GoogleFonts.robotoCondensed(
-                              //  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
                           Padding(

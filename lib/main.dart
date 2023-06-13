@@ -9,7 +9,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:naqi_app/sensor.dart';
 
 void main() async {
-  Sensor sensor = Sensor();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   AwesomeNotifications().initialize(
