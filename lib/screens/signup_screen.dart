@@ -307,6 +307,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       title: "",
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 20),
+                                       autoHide: Duration(seconds: 2),
                                       body: const Text(
                                         "تم التسجيل بنجاح",
                                         style: TextStyle(fontSize: 20),
