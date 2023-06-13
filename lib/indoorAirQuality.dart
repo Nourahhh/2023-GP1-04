@@ -43,44 +43,78 @@ class IndoorAirQuality {
 
   Widget viewIndoorAirQuality(List<int> readings, context) {
     List<String> levels = calculateLevel(readings);
+    Map<String, Color> airQuality_color = calculateAirQuality(levels);
+    String airQuality = airQuality_color.keys.first;
+    Color color = airQuality_color.values.first;
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _cardMenu(
-              context: context,
-              title: 'درجة الحرارة',
-              reading: readings[0].toString() + '\u00B0',
-              level: levels[0],
-              percent: calculatePercentege(readings)[0],
+            Text(
+              "مستوى جودة الهواء: ",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            _cardMenu(
-              context: context,
-              title: 'مستوى الرطوبة',
-              reading: readings[1].toString() + '%',
-              level: levels[1],
-              percent: calculatePercentege(readings)[1],
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: color,
+              ),
+              padding: EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20),
+              child: Text(
+                airQuality,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        const SizedBox(height: 20),
+        Column(
           children: [
-            _cardMenu(
-              context: context,
-              title: 'ثاني أكسيد الكربون',
-              reading: readings[2].toString(),
-              level: levels[2],
-              percent: calculatePercentege(readings)[2],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'درجة الحرارة',
+                  reading: readings[0].toString() + '\u00B0',
+                  level: levels[0],
+                  percent: calculatePercentege(readings)[0],
+                ),
+                _cardMenu(
+                  context: context,
+                  title: 'مستوى الرطوبة',
+                  reading: readings[1].toString() + '%',
+                  level: levels[1],
+                  percent: calculatePercentege(readings)[1],
+                ),
+              ],
             ),
-            _cardMenu(
-              context: context,
-              title: 'المركبات العضوية المتطايرة',
-              reading: readings[3].round().toString(),
-              level: levels[3],
-              percent: calculatePercentege(readings)[3],
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'ثاني أكسيد الكربون',
+                  reading: readings[2].toString(),
+                  level: levels[2],
+                  percent: calculatePercentege(readings)[2],
+                ),
+                _cardMenu(
+                  context: context,
+                  title: 'المركبات العضوية المتطايرة',
+                  reading: readings[3].round().toString(),
+                  level: levels[3],
+                  percent: calculatePercentege(readings)[3],
+                ),
+              ],
             ),
           ],
         ),
@@ -140,6 +174,21 @@ class IndoorAirQuality {
       levels.add("ملوث جدا");
     }
     return levels;
+  }
+
+  Map<String, Color> calculateAirQuality(List<String> levels) {
+    String airQuality = 'ممتاز';
+    for (String level in levels) {
+      if (level == "ملوث جدا") {
+        airQuality = level;
+        return {airQuality: Colors.red};
+      }
+      if (level == "ملوث") {
+        airQuality = level;
+        return {airQuality: Colors.orange};
+      }
+    }
+    return {airQuality: Colors.green};
   }
 
   Widget _cardMenu({
