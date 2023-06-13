@@ -2,9 +2,9 @@ import 'package:naqi_app/sensor.dart';
 import 'dart:convert';
 import 'package:naqi_app/indoorAirQuality.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:naqi_app/fan.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:naqi_app/controller.dart';
 
 class IndoorPage extends StatefulWidget {
   IndoorPage({Key? key}) : super(key: key);
@@ -15,18 +15,27 @@ class IndoorPage extends StatefulWidget {
 
 class _IndoorPageState extends State<IndoorPage>
     with AutomaticKeepAliveClientMixin {
+  //StreamSubscription<String>? _streamSubscription;
+  Controller controller = Controller();
   @override
   void initState() {
     super.initState();
+    //Listen to the stream
+    sensor.getReadings().listen((data) {
+      // This callback function is called every time new data is received from the stream
+      var jsonData = jsonDecode(data);
+      List<int> reading = sensorReadings.readData(jsonData);
+      var co2 = reading[2];
+      controller.checkAirQualityData(co2);
+    });
   }
 
   @override
   bool get wantKeepAlive => true;
   Sensor sensor = Sensor();
+  Fan fan = Fan();
   IndoorAirQuality sensorReadings = IndoorAirQuality();
   static bool isSwitchOn = false;
-
-  Fan fan = Fan();
 
   Widget build(BuildContext context) {
     super.build(context);
@@ -77,10 +86,6 @@ class _IndoorPageState extends State<IndoorPage>
                                 left: 20, right: 20, top: 10),
                             child: Text(
                               'تشغيل/إيقاف المروحة ',
-                              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
                             ),
                           ),
                           Padding(
