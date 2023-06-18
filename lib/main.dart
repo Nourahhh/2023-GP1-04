@@ -6,8 +6,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:naqi_app/screens/signup_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:naqi_app/fan.dart';
 
 void main() async {
+  Fan fan = Fan();
+  fan.setUpController();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   AwesomeNotifications().initialize(

@@ -36,9 +36,9 @@ class Fan {
     print(response.body);
   }
 
-  //void setUpController() {
-  // sendDownlink('AQAAAQ==');
-  //}
+  void setUpController() {
+    sendDownlink('AQAAAQ==');
+  }
 
   void turnOn() {
     sendDownlink('AwER');
