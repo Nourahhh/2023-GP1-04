@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:naqi_app/screens/indoor_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:naqi_app/controller.dart';
-import 'package:naqi_app/sensor.dart';
 
 class HomeSceen extends StatefulWidget {
   const HomeSceen({super.key});
@@ -25,9 +23,7 @@ class _HomeSceenState extends State<HomeSceen>
     super.initState();
   }
 
-  Controller controller = Controller();
   IndoorPage indoorPage = IndoorPage();
-  Sensor sensor = Sensor();
 
   int index = 1;
   late final pages = [
