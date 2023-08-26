@@ -69,7 +69,6 @@ class _IndoorPageState extends State<IndoorPage>
                                 sensorReadings.calculateLevel(readings);
                             return Column(children: [
                               Row(
-                                //mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
