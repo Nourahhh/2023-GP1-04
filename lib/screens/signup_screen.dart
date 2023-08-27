@@ -26,7 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   //button style
   final ButtonStyle buttonPrimary = ElevatedButton.styleFrom(
-    minimumSize: Size(330, 55),
+    minimumSize: Size(345, 55),
     backgroundColor: Color.fromARGB(255, 43, 138, 159),
     elevation: 0,
     shape: RoundedRectangleBorder(
@@ -54,6 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return regExp.hasMatch(value);
   }
 
+bool _showText = false;
 // to see password
   bool _isSourcePaasword = true;
   bool _isSourceConfirPaasword = true;
@@ -169,7 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
 
-                SizedBox(height: 10),
+               
 
                 //last name
                 SizedBox(height: 10),
@@ -190,7 +191,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         return 'الرجاء كتابة البريد الإلكتروني ';
                       } else if ((value.isNotEmpty) &&
                           !RegExp(r'\w+@\w+\.\w+').hasMatch(value)) {
-                        return "الرجاء اخال عنوان بريد إلكتروني صالح";
+                        return "الرجاء ادخال عنوان بريد إلكتروني صالح";
                       }
 
                       return null;
@@ -199,33 +200,51 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
 
                 SizedBox(height: 10),
+
+                 
 
                 //password
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    keyboardType: TextInputType.text,
-                    obscureText: _isSourcePaasword,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        labelText: " كلمة المرور",
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: togglePasswprd()),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'برجاء ادخال كلمة المرور ';
-                      } else if (value.length < 5 ||
-                          !validateStructure(value)) {
-                        return 'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+  padding: const EdgeInsets.symmetric(horizontal: 25),
+  child: TextFormField(
+    onTap: () {
+      setState(() {
+        _showText = true; // Add a boolean variable _showText to the widget's state
+      });
+    },
+    controller: _passwordController,
+    keyboardType: TextInputType.text,
+    obscureText: _isSourcePaasword,
+    decoration: InputDecoration(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      labelText: "كلمة المرور",
+      prefixIcon: Icon(Icons.lock),
+      suffixIcon: togglePasswprd(),
+    ),
+    validator: (value) {
+      if (value!.isEmpty) {
+        return 'برجاء ادخال كلمة المرور';
+      } else if (value.length < 5 || !validateStructure(value)) {
+        return 'لم تطبق جميع شروط كلمة المرور';
+      }
+      return null;
+    },
+  ),
+),
+if (_showText) // Display the text only when _showText is true
+  Padding(
+    padding: const EdgeInsets.only(left: 77),
+    child: Text(
+      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*',
+      style: GoogleFonts.robotoCondensed(fontSize: 14),
+    ),
+  ),
 
-                SizedBox(height: 10),
+                SizedBox(height: 7),
+
+                
 
                 //Confirm password
 
@@ -428,3 +447,5 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       );
 }
+
+
