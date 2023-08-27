@@ -70,34 +70,49 @@ class IndoorAirQuality {
             ],
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _cardMenu(
-                context: context,
-                title: 'درجة الحرارة',
-                reading: readings[0].toString() + '\u00B0',
-                level: levels[0],
-                percent: calculatePercentege(readings)[0],
-              ),
-              _cardMenu(
-                context: context,
-                title: 'مستوى الرطوبة',
-                reading: readings[1].toString() + '%',
-                level: levels[1],
-                percent: calculatePercentege(readings)[1],
-              ),
-              _cardMenu(
-                context: context,
-                title: 'ثاني أكسيد الكربون',
-                reading: readings[2].toString(),
-                level: levels[2],
-                percent: calculatePercentege(readings)[2],
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'درجة الحرارة',
+                  reading: readings[0].toString() + '\u00B0',
+                  level: levels[0],
+                  percent: calculatePercentege(readings)[0],
+                ),
+              ],
+            ),
           ),
-          // ],
-          //  ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Row(
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'مستوى الرطوبة',
+                  reading: readings[1].toString() + '%',
+                  level: levels[1],
+                  percent: calculatePercentege(readings)[1],
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Row(
+              children: [
+                _cardMenu(
+                  context: context,
+                  title: 'ثاني أكسيد الكربون',
+                  reading: readings[2].toString(),
+                  level: levels[2],
+                  percent: calculatePercentege(readings)[2],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -177,7 +192,7 @@ class IndoorAirQuality {
           padding: const EdgeInsets.symmetric(
             vertical: 25,
           ),
-          width: 100,
+          width: 340,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(24),
@@ -189,46 +204,79 @@ class IndoorAirQuality {
               ),
             ],
           ),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircularPercentIndicator(
-                animation: true,
-                animationDuration: 1000,
-                circularStrokeCap: CircularStrokeCap.round,
-                radius: 60,
-                lineWidth: 5,
-                percent: percent,
-                progressColor: const Color(0xff45A1B6),
-                center: Text(
-                  reading.toString(),
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              if (title == 'درجة الحرارة')
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.thermostat,
                   ),
                 ),
-              ),
-              if (title != 'ثاني أكسيد الكربون') const SizedBox(height: 24),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: Text(
+              if (title == 'مستوى الرطوبة')
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.water_drop,
+                  ),
+                ),
+              if (title == 'ثاني أكسيد الكربون')
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.cloud,
+                    color: Colors.lightBlue,
+                  ),
+                ),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      //Padding(
+                      // padding: const EdgeInsets.only(bottom: 25.0, right: 25),
+                      // child:
+                      Text(
                         title,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: fontColor),
-                        textAlign: TextAlign.center,
-                        //softWrap: true,
                       ),
-                    ),
-                    if (title != 'ثاني أكسيد الكربون')
-                      const SizedBox(height: 12),
-                  ],
-                ),
+                      // ),
+                    ],
+                  ),
+                ],
               ),
-              Text(
-                level,
-                style: TextStyle(fontWeight: FontWeight.bold, color: fontColor),
+              Column(
+                children: [
+                  // Padding(
+                  //padding: const EdgeInsets.only(top: 25.0, left: 50),
+                  //child:
+                  Text(
+                    level,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: fontColor),
+                  ),
+                  // ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1000,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  radius: 60,
+                  lineWidth: 5,
+                  percent: percent,
+                  progressColor: const Color(0xff45A1B6),
+                  center: Text(
+                    reading.toString(),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

@@ -4,6 +4,7 @@ import 'package:naqi_app/indoorAirQuality.dart';
 import 'package:flutter/material.dart';
 import 'package:naqi_app/fan.dart';
 import 'package:naqi_app/controller.dart';
+import 'package:naqi_app/firebase.dart';
 
 class IndoorPage extends StatefulWidget {
   IndoorPage({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class _IndoorPageState extends State<IndoorPage>
     with AutomaticKeepAliveClientMixin {
   //StreamSubscription<String>? _streamSubscription;
   Controller controller = Controller();
+  //FirebaseService firebase = FirebaseService();
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +38,8 @@ class _IndoorPageState extends State<IndoorPage>
   Fan fan = Fan();
   IndoorAirQuality sensorReadings = IndoorAirQuality();
   static bool isSwitchOn = false;
+  String status = '';
+  FirebaseService firebase = FirebaseService();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,39 +98,76 @@ class _IndoorPageState extends State<IndoorPage>
   }
 
   Widget controlFan() {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-          child: Text(
-            'تشغيل/إيقاف المروحة ',
-          ),
+    Future<String> fanStatus = firebase.getStatus();
+    fanStatus.then((value) {
+      status = value;
+    });
+    print(status);
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, right: 2),
+      child: Container(
+        width: 340, // Adjust the width as needed
+        height: 100, // Adjust the height as needed
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 251, 251, 251),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 8,
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: // Define a boolean variable to keep track of switch state
 
-// Define the switch
-              Switch(
-            activeColor: const Color.fromARGB(255, 255, 255, 255),
-            activeTrackColor: const Color(0xff45A1B6),
-            inactiveThumbColor: Colors.blueGrey.shade600,
-            inactiveTrackColor: Colors.grey.shade400,
-            splashRadius: 50.0,
-            value: isSwitchOn, // Use the boolean variable to set switch state
-            onChanged: (value) => setState(() {
-              if (value) {
-                fan.turnOn();
-                fan.updateSwitch(1);
-              } else {
-                fan.turnOff();
-                fan.updateSwitch(0);
-              }
-              isSwitchOn = value; // Update the boolean variable
-            }),
-          ),
+        child: Column(
+          children: [
+            if (status == '0')
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'المروحة: في وضع الإيقاف',
+                ),
+              ),
+            if (status == '1')
+              Text(
+                'المروحة قيد التشغيل',
+              ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: Text(
+                    'تشغيل/إيقاف المروحة ',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Switch(
+                    activeColor: const Color.fromARGB(255, 255, 255, 255),
+                    activeTrackColor: const Color(0xff45A1B6),
+                    inactiveThumbColor: Colors.blueGrey.shade600,
+                    inactiveTrackColor: Colors.grey.shade400,
+                    splashRadius: 50.0,
+                    value: isSwitchOn,
+                    onChanged: (value) => setState(() {
+                      if (value) {
+                        fan.turnOn();
+                        fan.updateSwitch(1);
+                      } else {
+                        fan.turnOff();
+                        fan.updateSwitch(0);
+                      }
+                      isSwitchOn = value;
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
