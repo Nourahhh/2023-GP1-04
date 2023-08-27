@@ -22,8 +22,6 @@ class IndoorAirQuality {
               .round();
           hum = (data as Map)['uplink_message']['decoded_payload']['humidity']
               .round();
-          tvoc = (data as Map)['uplink_message']['decoded_payload']['tvoc']
-              .round();
         }
       }
     }
@@ -31,7 +29,6 @@ class IndoorAirQuality {
       temp,
       hum,
       co2,
-      tvoc,
     ];
 
     return readings;
@@ -42,79 +39,67 @@ class IndoorAirQuality {
     Map<String, Color> airQuality_color = calculateAirQuality(levels);
     String airQuality = airQuality_color.keys.first;
     Color color = airQuality_color.values.first;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "مستوى جودة الهواء: ",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: color,
-              ),
-              padding: EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20),
-              child: Text(
-                airQuality,
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "مستوى جودة الهواء: ",
                 style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _cardMenu(
-                  context: context,
-                  title: 'درجة الحرارة',
-                  reading: readings[0].toString() + '\u00B0',
-                  level: levels[0],
-                  percent: calculatePercentege(readings)[0],
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: color,
                 ),
-                _cardMenu(
-                  context: context,
-                  title: 'مستوى الرطوبة',
-                  reading: readings[1].toString() + '%',
-                  level: levels[1],
-                  percent: calculatePercentege(readings)[1],
+                padding:
+                    EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20),
+                child: Text(
+                  airQuality,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _cardMenu(
-                  context: context,
-                  title: 'ثاني أكسيد الكربون',
-                  reading: readings[2].toString(),
-                  level: levels[2],
-                  percent: calculatePercentege(readings)[2],
-                ),
-                _cardMenu(
-                  context: context,
-                  title: 'المركبات العضوية المتطايرة',
-                  reading: readings[3].round().toString(),
-                  level: levels[3],
-                  percent: calculatePercentege(readings)[3],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _cardMenu(
+                context: context,
+                title: 'درجة الحرارة',
+                reading: readings[0].toString() + '\u00B0',
+                level: levels[0],
+                percent: calculatePercentege(readings)[0],
+              ),
+              _cardMenu(
+                context: context,
+                title: 'مستوى الرطوبة',
+                reading: readings[1].toString() + '%',
+                level: levels[1],
+                percent: calculatePercentege(readings)[1],
+              ),
+              _cardMenu(
+                context: context,
+                title: 'ثاني أكسيد الكربون',
+                reading: readings[2].toString(),
+                level: levels[2],
+                percent: calculatePercentege(readings)[2],
+              ),
+            ],
+          ),
+          // ],
+          //  ),
+        ],
+      ),
     );
   }
 
@@ -128,9 +113,6 @@ class IndoorAirQuality {
 
     // co2 percantsge
     percentages.add(readings[2] / 2000);
-
-    // tvoc percentage
-    percentages.add(readings[3] / 300);
 
     return percentages;
   }
@@ -161,14 +143,7 @@ class IndoorAirQuality {
     } else if (readings[2] >= 1500) {
       levels.add("ملوث جدا");
     }
-    // tvoc level
-    if (readings[3] <= 100) {
-      levels.add("ممتاز");
-    } else if ((readings[3] > 100) & (readings[3] < 200)) {
-      levels.add("ملوث");
-    } else if (readings[3] >= 200) {
-      levels.add("ملوث جدا");
-    }
+
     return levels;
   }
 
@@ -200,9 +175,9 @@ class IndoorAirQuality {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(
-            vertical: 30,
+            vertical: 25,
           ),
-          width: 150,
+          width: 100,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(24),
@@ -220,7 +195,7 @@ class IndoorAirQuality {
                 animation: true,
                 animationDuration: 1000,
                 circularStrokeCap: CircularStrokeCap.round,
-                radius: 90,
+                radius: 60,
                 lineWidth: 5,
                 percent: percent,
                 progressColor: const Color(0xff45A1B6),
@@ -232,8 +207,7 @@ class IndoorAirQuality {
                   ),
                 ),
               ),
-              if (title != 'المركبات العضوية المتطايرة')
-                const SizedBox(height: 24),
+              if (title != 'ثاني أكسيد الكربون') const SizedBox(height: 24),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -247,7 +221,7 @@ class IndoorAirQuality {
                         //softWrap: true,
                       ),
                     ),
-                    if (title != 'المركبات العضوية المتطايرة')
+                    if (title != 'ثاني أكسيد الكربون')
                       const SizedBox(height: 12),
                   ],
                 ),
@@ -259,13 +233,13 @@ class IndoorAirQuality {
             ],
           ),
         ),
-           if (title == 'درجة الحرارة')
+        if (title == 'درجة الحرارة')
           Positioned(
             bottom: 0.0,
             right: 0.0,
             child: myWidget(context, 1),
           ),
-             if (title == 'مستوى الرطوبة')
+        if (title == 'مستوى الرطوبة')
           Positioned(
             bottom: 0.0,
             right: 0.0,
@@ -276,12 +250,6 @@ class IndoorAirQuality {
             bottom: 0.0,
             right: 0.0,
             child: myWidget(context, 3),
-          ),
-        if (title == 'المركبات العضوية المتطايرة')
-          Positioned(
-            bottom: 0.0,
-            right: 0.0,
-            child: myWidget(context, 4),
           ),
       ],
     );
@@ -301,7 +269,7 @@ class IndoorAirQuality {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 // temp
+                // temp
                 if (type == 1)
                   Padding(
                     padding: const EdgeInsets.all(30.0),
@@ -310,11 +278,11 @@ class IndoorAirQuality {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                    // temp
+                // temp
                 if (type == 2)
                   Padding(
                     padding: const EdgeInsets.all(30.0),
-                      child: Text(
+                    child: Text(
                       ' - يعتبر مستوى الرطوبة منخفض إذا كان أقل من ٣٠  \n - يعتبر مستوى الرطوبة متوسط إذا كان أعلى من أو يساوي ٣٠ وأقل من أو يساوي ٦٠  \n  - يعتبر مستوى الرطوبة عالي إذا كان أعلى من ٦٠',
                       textAlign: TextAlign.center,
                     ),
@@ -328,15 +296,7 @@ class IndoorAirQuality {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                //TVOC
-                if (type == 4)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      ' المركبات العضوية المتطايرة هي  مواد كيميائية عضوية من الممكن أن تؤثر سلبًا على جودة الهواء وقد تضر بصحة الإنسان.\nتشمل الأعراض المرتبطة بارتفاع مستويات إجمالي المركبات العضوية المتطايرة الصداع والتعب ومشاكل الجهاز التنفسي. \n - يعتبر مستوى المركبات العضوية المتطايرة ممتاز إذا كان اقل من أو يساوي ١٠٠  \n - يعتبر مستوى المركبات العضوية المتطايرة ملوث إذا كان أعلى من ١٠٠ وأقل من ٢٠٠ \n  - يعتبر مستوى المركبات العضوية المتطايرة ملوث جدًا إذا كان أعلى من أو يساوي ٢٠٠',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(

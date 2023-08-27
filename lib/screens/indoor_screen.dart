@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:naqi_app/indoorAirQuality.dart';
 import 'package:flutter/material.dart';
 import 'package:naqi_app/fan.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:naqi_app/controller.dart';
 
 class IndoorPage extends StatefulWidget {
@@ -38,8 +37,6 @@ class _IndoorPageState extends State<IndoorPage>
   static bool isSwitchOn = false;
 
   Widget build(BuildContext context) {
-    super.build(context);
-
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -60,62 +57,29 @@ class _IndoorPageState extends State<IndoorPage>
                     children: [
                       const SizedBox(height: 26),
                       StreamBuilder<String>(
-                          stream: sensor.getReadings(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              print("no data");
-                              return const CircularProgressIndicator();
-                            } else {
-                              var data = jsonDecode(snapshot.data.toString());
-                              List<int> readings =
-                                  sensorReadings.readData(data);
-
-                              List<String> levels =
-                                  sensorReadings.calculateLevel(readings);
-                              return sensorReadings.viewIndoorAirQuality(
-                                  readings, context);
-                            }
-                          }),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 10),
-                            child: Text(
-                              'تشغيل/إيقاف المروحة ',
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: // Define a boolean variable to keep track of switch state
-
-// Define the switch
-                                Switch(
-                              activeColor:
-                                  const Color.fromARGB(255, 255, 255, 255),
-                              activeTrackColor: const Color(0xff45A1B6),
-                              inactiveThumbColor: Colors.blueGrey.shade600,
-                              inactiveTrackColor: Colors.grey.shade400,
-                              splashRadius: 50.0,
-                              value:
-                                  isSwitchOn, // Use the boolean variable to set switch state
-                              onChanged: (value) => setState(() {
-                                if (value) {
-                                  fan.turnOn();
-                                  fan.updateSwitch(1);
-                                } else {
-                                  fan.turnOff();
-                                  fan.updateSwitch(0);
-                                }
-                                isSwitchOn =
-                                    value; // Update the boolean variable
-                              }),
-                            ),
-                          ),
-                        ],
+                        stream: sensor.getReadings(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            print("no data");
+                            return CircularProgressIndicator();
+                          } else {
+                            var data = jsonDecode(snapshot.data.toString());
+                            List<int> readings = sensorReadings.readData(data);
+                            List<String> levels =
+                                sensorReadings.calculateLevel(readings);
+                            return Column(children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  sensorReadings.viewIndoorAirQuality(
+                                      readings, context),
+                                ],
+                              ),
+                              Row(children: [controlFan()]),
+                            ]);
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -125,6 +89,43 @@ class _IndoorPageState extends State<IndoorPage>
           ),
         ),
       ),
+    );
+  }
+
+  Widget controlFan() {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+          child: Text(
+            'تشغيل/إيقاف المروحة ',
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: // Define a boolean variable to keep track of switch state
+
+// Define the switch
+              Switch(
+            activeColor: const Color.fromARGB(255, 255, 255, 255),
+            activeTrackColor: const Color(0xff45A1B6),
+            inactiveThumbColor: Colors.blueGrey.shade600,
+            inactiveTrackColor: Colors.grey.shade400,
+            splashRadius: 50.0,
+            value: isSwitchOn, // Use the boolean variable to set switch state
+            onChanged: (value) => setState(() {
+              if (value) {
+                fan.turnOn();
+                fan.updateSwitch(1);
+              } else {
+                fan.turnOff();
+                fan.updateSwitch(0);
+              }
+              isSwitchOn = value; // Update the boolean variable
+            }),
+          ),
+        ),
+      ],
     );
   }
 }

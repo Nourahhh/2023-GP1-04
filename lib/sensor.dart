@@ -7,8 +7,7 @@ class Sensor {
 
   Future<String> getReading() async {
     final url =
-        'https://webhook.site/token/0b3900cf-79d5-4c94-968c-8f8003fb1c6f/request/latest/raw';
-
+        'https://webhook.site/token/cca1fa82-399e-46f7-bf47-c365ecf222bf/request/latest/raw';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       print("ok");

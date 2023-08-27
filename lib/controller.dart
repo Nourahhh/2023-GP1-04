@@ -9,7 +9,6 @@ class Controller {
   String isSwitchOn = '';
   FirebaseService firebase = FirebaseService();
   Fan fan = Fan();
-  IndoorPage i = IndoorPage();
 
   void checkAirQualityData(var co2) {
     // Get fan status and switch status from databse
