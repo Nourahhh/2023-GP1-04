@@ -189,12 +189,12 @@ class IndoorAirQuality {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(
-            vertical: 25,
+            vertical: 23,
           ),
           width: 340,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.4),
@@ -403,7 +403,7 @@ class IndoorAirQuality {
       },
       icon: Icon(
         Icons.info_outline,
-        size: 18,
+        size: 14,
         color: Color.fromARGB(255, 107, 107, 107),
       ),
     );
