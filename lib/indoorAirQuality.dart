@@ -7,7 +7,6 @@ class IndoorAirQuality {
   var co2 = 0;
   var temp = 0;
   var hum = 0;
-  var tvoc = 0;
 
   dynamic readData(dynamic data) {
     if (data.containsKey('uplink_message')) {
@@ -195,7 +194,7 @@ class IndoorAirQuality {
           width: 340,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.4),
@@ -209,54 +208,96 @@ class IndoorAirQuality {
             children: [
               if (title == 'درجة الحرارة')
                 Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Icon(
-                    Icons.thermostat,
+                  padding: EdgeInsets.only(right: 20),
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(255, 240, 242, 243),
+                    ),
+                    child: CircleAvatar(
+                      child: Icon(
+                        Icons.thermostat,
+                        color: Color(0xff45A1B6),
+                        size: 25,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                 ),
               if (title == 'مستوى الرطوبة')
                 Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Icon(
-                    Icons.water_drop,
+                  padding: EdgeInsets.only(right: 20),
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(255, 240, 242, 243),
+                    ),
+                    child: CircleAvatar(
+                      child: Icon(
+                        Icons.water_drop,
+                        color: Color(0xff45A1B6),
+                        size: 25,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                 ),
               if (title == 'ثاني أكسيد الكربون')
                 Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Icon(
-                    Icons.cloud,
-                    color: Colors.lightBlue,
+                  padding: EdgeInsets.only(right: 20),
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color.fromARGB(255, 240, 242, 243),
+                    ),
+                    child: CircleAvatar(
+                      child: Icon(
+                        Icons.cloud,
+                        color: Color(0xff45A1B6),
+                        size: 25,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                 ),
               Row(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Padding(
-                      // padding: const EdgeInsets.only(bottom: 25.0, right: 25),
-                      // child:
-                      Text(
-                        title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: fontColor),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
-                      // ),
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              level,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  // Padding(
-                  //padding: const EdgeInsets.only(top: 25.0, left: 50),
-                  //child:
-                  Text(
-                    level,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: fontColor),
-                  ),
-                  // ),
+                  )
                 ],
               ),
               Padding(
@@ -265,14 +306,14 @@ class IndoorAirQuality {
                   animation: true,
                   animationDuration: 1000,
                   circularStrokeCap: CircularStrokeCap.round,
-                  radius: 60,
+                  radius: 65,
                   lineWidth: 5,
                   percent: percent,
                   progressColor: const Color(0xff45A1B6),
                   center: Text(
                     reading.toString(),
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -284,19 +325,19 @@ class IndoorAirQuality {
         if (title == 'درجة الحرارة')
           Positioned(
             bottom: 0.0,
-            right: 0.0,
+            left: 0.0,
             child: myWidget(context, 1),
           ),
         if (title == 'مستوى الرطوبة')
           Positioned(
             bottom: 0.0,
-            right: 0.0,
+            left: 0.0,
             child: myWidget(context, 2),
           ),
         if (title == 'ثاني أكسيد الكربون')
           Positioned(
             bottom: 0.0,
-            right: 0.0,
+            left: 0.0,
             child: myWidget(context, 3),
           ),
       ],
@@ -360,10 +401,10 @@ class IndoorAirQuality {
           ),
         );
       },
-      icon: Image.asset(
-        'images/question.png',
-        width: 18,
-        height: 18,
+      icon: Icon(
+        Icons.info_outline,
+        size: 18,
+        color: Color.fromARGB(255, 107, 107, 107),
       ),
     );
   }

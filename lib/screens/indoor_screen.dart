@@ -15,9 +15,7 @@ class IndoorPage extends StatefulWidget {
 
 class _IndoorPageState extends State<IndoorPage>
     with AutomaticKeepAliveClientMixin {
-  //StreamSubscription<String>? _streamSubscription;
   Controller controller = Controller();
-  //FirebaseService firebase = FirebaseService();
 
   @override
   void initState() {
