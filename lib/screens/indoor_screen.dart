@@ -119,49 +119,90 @@ class _IndoorPageState extends State<IndoorPage>
           ],
         ),
 
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (status == '0')
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  'المروحة: في وضع الإيقاف',
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 240, 242, 243),
+                ),
+                child: CircleAvatar(
+                  child: Image.asset(
+                    'images/fan.png',
+                    height: 30,
+                  ),
+                  backgroundColor: Colors.transparent,
                 ),
               ),
-            if (status == '1')
-              Text(
-                'المروحة قيد التشغيل',
-              ),
+            ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: Text(
-                    'تشغيل/إيقاف المروحة ',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Switch(
-                    activeColor: const Color.fromARGB(255, 255, 255, 255),
-                    activeTrackColor: const Color(0xff45A1B6),
-                    inactiveThumbColor: Colors.blueGrey.shade600,
-                    inactiveTrackColor: Colors.grey.shade400,
-                    splashRadius: 50.0,
-                    value: isSwitchOn,
-                    onChanged: (value) => setState(() {
-                      if (value) {
-                        fan.turnOn();
-                        fan.updateSwitch(1);
-                      } else {
-                        fan.turnOff();
-                        fan.updateSwitch(0);
-                      }
-                      isSwitchOn = value;
-                    }),
-                  ),
-                ),
+                Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /* Align(
+                        alignment: Alignment.centerRight,
+                        child: */
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: Text(
+                        'المروحة',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    // ),
+                    Row(
+                      children: [
+                        /*  Align(
+                            alignment: Alignment.centerRight,
+                            child: */
+                        if (status == '0')
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              ' قيد الإيقاف',
+                            ),
+                          ),
+                        if (status == '1')
+                          Text(
+                            ' قيد التشغيل',
+                          ),
+                        // ),
+                      ],
+                    ),
+                  ],
+                )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Switch(
+                activeColor: const Color.fromARGB(255, 255, 255, 255),
+                activeTrackColor: const Color(0xff45A1B6),
+                inactiveThumbColor: Colors.blueGrey.shade600,
+                inactiveTrackColor: Colors.grey.shade400,
+                splashRadius: 50.0,
+                value: isSwitchOn,
+                onChanged: (value) => setState(() {
+                  if (value) {
+                    fan.turnOn();
+                    fan.updateSwitch(1);
+                  } else {
+                    fan.turnOff();
+                    fan.updateSwitch(0);
+                  }
+                  isSwitchOn = value;
+                }),
+              ),
             ),
           ],
         ),

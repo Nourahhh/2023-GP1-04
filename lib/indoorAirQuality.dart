@@ -269,31 +269,33 @@ class IndoorAirQuality {
               Row(
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      /* Align(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
+                        child: */
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18,
                         ),
                       ),
+                      // ),
                       Row(
                         children: [
-                          Align(
+                          /*  Align(
                             alignment: Alignment.centerRight,
-                            child: Text(
-                              level,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: fontColor,
-                              ),
+                            child: */
+                          Text(
+                            level,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: fontColor,
                             ),
                           ),
+                          // ),
                         ],
                       ),
                     ],
