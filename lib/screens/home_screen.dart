@@ -30,67 +30,7 @@ class _HomeSceenState extends State<HomeSceen>
   int index = 1;
   late final pages = [
     //هنا صفحة حسابي
-    Center(
-      child: Column(
-        children: [
-          Container(
-            child: Text('حسابي', style: TextStyle(fontSize: 37)),
-          ),
-          Container(
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                          title: Text('رسالة تأكيد'),
-                          content: Text('هل انت متأكد من رغبتك بتسجيل الخروج؟'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                FirebaseAuth.instance.signOut();
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(
-                                'نعم',
-                                style: GoogleFonts.robotoCondensed(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'لا',
-                                  style: GoogleFonts.robotoCondensed(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                )),
-                          ],
-                        ));
-              },
-              child: Text(
-                'تسجيل الخروج',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 43, 138, 159)),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
+    ProfilePage,
     //هنا صفحة داخلي
     indoorPage,
     //هنا صفحة خارجي
