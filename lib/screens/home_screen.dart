@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:naqi_app/screens/indoor_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:naqi_app/screens/profile_screen.dart';
 
 class HomeSceen extends StatefulWidget {
   const HomeSceen({super.key});
@@ -23,6 +24,7 @@ class _HomeSceenState extends State<HomeSceen>
     super.initState();
   }
 
+  profilePage ProfilePage = profilePage();
   IndoorPage indoorPage = IndoorPage();
 
   int index = 1;
