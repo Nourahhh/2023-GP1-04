@@ -28,6 +28,10 @@ class _IndoorPageState extends State<IndoorPage>
       var co2 = reading[2];
       controller.checkAirQualityData(co2);
     });
+    Future<String> fanStatus = firebase.getStatus();
+    fanStatus.then((value) {
+      status = value;
+    });
   }
 
   @override
@@ -79,7 +83,7 @@ class _IndoorPageState extends State<IndoorPage>
                                       readings, context),
                                 ],
                               ),
-                              Row(children: [controlFan()]),
+                              Row(children: [controlFanWidget()]),
                             ]);
                           }
                         },
@@ -95,12 +99,12 @@ class _IndoorPageState extends State<IndoorPage>
     );
   }
 
-  Widget controlFan() {
+  Widget controlFanWidget() {
     Future<String> fanStatus = firebase.getStatus();
     fanStatus.then((value) {
       status = value;
     });
-    print(status);
+
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 2),
       child: Container(
