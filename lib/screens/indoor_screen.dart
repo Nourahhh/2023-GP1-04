@@ -147,40 +147,44 @@ class _IndoorPageState extends State<IndoorPage>
             Row(
               children: [
                 Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /* Align(
-                        alignment: Alignment.centerRight,
-                        child: */
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Text(
-                        'المروحة',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 18,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Text(
+                          'المروحة',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                    // ),
                     Row(
                       children: [
-                        /*  Align(
-                            alignment: Alignment.centerRight,
-                            child: */
                         if (status == '0')
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              ' قيد الإيقاف',
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: Text(
+                                'قيد الإيقاف',
+                              ),
                             ),
                           ),
                         if (status == '1')
-                          Text(
-                            ' قيد التشغيل',
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: Text(
+                                'قيد التشغيل',
+                              ),
+                            ),
                           ),
-                        // ),
                       ],
                     ),
                   ],
