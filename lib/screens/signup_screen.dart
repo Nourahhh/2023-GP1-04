@@ -54,7 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return regExp.hasMatch(value);
   }
 
-bool _showText = false;
+  bool _showText = false;
 // to see password
   bool _isSourcePaasword = true;
   bool _isSourceConfirPaasword = true;
@@ -170,8 +170,6 @@ bool _showText = false;
                   ),
                 ),
 
-               
-
                 //last name
                 SizedBox(height: 10),
 
@@ -201,50 +199,48 @@ bool _showText = false;
 
                 SizedBox(height: 10),
 
-                 
-
                 //password
                 Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 25),
-  child: TextFormField(
-    onTap: () {
-      setState(() {
-        _showText = true; // Add a boolean variable _showText to the widget's state
-      });
-    },
-    controller: _passwordController,
-    keyboardType: TextInputType.text,
-    obscureText: _isSourcePaasword,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      labelText: "كلمة المرور",
-      prefixIcon: Icon(Icons.lock),
-      suffixIcon: togglePasswprd(),
-    ),
-    validator: (value) {
-      if (value!.isEmpty) {
-        return 'برجاء ادخال كلمة المرور';
-      } else if (value.length < 5 || !validateStructure(value)) {
-        return 'لم تطبق جميع شروط كلمة المرور';
-      }
-      return null;
-    },
-  ),
-),
-if (_showText) // Display the text only when _showText is true
-  Padding(
-    padding: const EdgeInsets.only(left: 77),
-    child: Text(
-      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*',
-      style: GoogleFonts.robotoCondensed(fontSize: 14),
-    ),
-  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: TextFormField(
+                    onTap: () {
+                      setState(() {
+                        _showText =
+                            true; // Add a boolean variable _showText to the widget's state
+                      });
+                    },
+                    controller: _passwordController,
+                    keyboardType: TextInputType.text,
+                    obscureText: _isSourcePaasword,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelText: "كلمة المرور",
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: togglePasswprd(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'برجاء ادخال كلمة المرور';
+                      } else if (value.length < 5 ||
+                          !validateStructure(value)) {
+                        return 'لم تطبق جميع شروط كلمة المرور';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                if (_showText) // Display the text only when _showText is true
+                  Padding(
+                    padding: const EdgeInsets.only(left: 77),
+                    child: Text(
+                      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة و رموز مثل@#%&*',
+                      style: GoogleFonts.robotoCondensed(fontSize: 14),
+                    ),
+                  ),
 
                 SizedBox(height: 7),
-
-                
 
                 //Confirm password
 
@@ -314,6 +310,7 @@ if (_showText) // Display the text only when _showText is true
                                             'firstName': firstName,
                                             'listName': listName,
                                             'userEmail': userEmail,
+                                            'healthStatus': 0,
                                           }),
                                           // ignore: avoid_print
                                           print("data added"),
@@ -326,7 +323,7 @@ if (_showText) // Display the text only when _showText is true
                                       title: "",
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 20),
-                                       autoHide: Duration(seconds: 2),
+                                      autoHide: Duration(seconds: 2),
                                       body: const Text(
                                         "تم التسجيل بنجاح",
                                         style: TextStyle(fontSize: 20),
@@ -447,5 +444,3 @@ if (_showText) // Display the text only when _showText is true
         ),
       );
 }
-
-

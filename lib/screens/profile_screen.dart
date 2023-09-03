@@ -285,7 +285,7 @@ class _profilePageState extends State<profilePage> {
           Container(
             child: Text('الحالة الصحية', style: TextStyle(fontSize: 25)),
           ),
-          Row(
+                    Row(
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
@@ -424,6 +424,8 @@ class _profilePageState extends State<profilePage> {
               ),
             ],
           ),
+
+    
           Divider(
             color: Colors.grey[800], // Set the color to dark gray
           ),
