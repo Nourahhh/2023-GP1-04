@@ -147,18 +147,19 @@ class _profilePageState extends State<profilePage> {
                                     ),
                                   ),
                                   TextButton(
-  onPressed: () {
-    if (newValue1 != null && newValue1.isNotEmpty) {
-      updateFirstName(newValue1);
-    }
-    Navigator.of(context).pop();
-  },
-  child: Text(
-    'حفظ',
-    style: TextStyle(color: Colors.blue),
-  ),
-),
-
+                                    onPressed: () {
+                                      if (newValue1 != null &&
+                                          newValue1.isNotEmpty) {
+                                        updateFirstName(newValue1);
+                                        
+                                      }
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'حفظ',
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                  ),
                                 ],
                               ),
                             );
@@ -223,10 +224,12 @@ class _profilePageState extends State<profilePage> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                       if (newValue1 != null) {
-                                      updateLastName(newValue2);
-                                      Navigator.of(context).pop();
-                                       }
+                                       if (newValue2 != null &&
+                                          newValue2.isNotEmpty) {
+                                        updateLastName(newValue2);
+                                    
+                                      }
+                                       Navigator.of(context).pop();
                                     },
                                     child: Text(
                                       'حفظ',
@@ -285,7 +288,7 @@ class _profilePageState extends State<profilePage> {
           Container(
             child: Text('الحالة الصحية', style: TextStyle(fontSize: 25)),
           ),
-                    Row(
+          Row(
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
@@ -424,8 +427,6 @@ class _profilePageState extends State<profilePage> {
               ),
             ],
           ),
-
-    
           Divider(
             color: Colors.grey[800], // Set the color to dark gray
           ),
