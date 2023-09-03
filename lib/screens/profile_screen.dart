@@ -42,7 +42,7 @@ class _profilePageState extends State<profilePage> {
       final userInfo = await fetchUserInfo(userId);
       setState(() {
         first_name = userInfo.data()!['firstName'];
-        last_name = userInfo.data()!['lastName'];
+        last_name = userInfo.data()!['listName'];
         email = userInfo.data()!['userEmail'];
       });
     }
@@ -74,7 +74,7 @@ class _profilePageState extends State<profilePage> {
       final userId = user.uid;
       final userRef =
           FirebaseFirestore.instance.collection('users').doc(userId);
-      await userRef.update({'lastName': newLastName});
+      await userRef.update({'listName': newLastName});
       setState(() {
         last_name = newLastName;
       });
@@ -223,10 +223,11 @@ class _profilePageState extends State<profilePage> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      if (newValue1 != null) {
+                                      if (newValue2 != null &&
+                                          newValue2.isNotEmpty) {
                                         updateLastName(newValue2);
-                                        Navigator.of(context).pop();
                                       }
+                                      Navigator.of(context).pop();
                                     },
                                     child: Text(
                                       'حفظ',
