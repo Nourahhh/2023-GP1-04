@@ -22,7 +22,8 @@ class Controller {
         // check CO2 and fan status
         if ((co2 > 1000) & (status == '0')) {
           fan.turnOn();
-          sendNotification();
+          sendNotification(
+              "مستوى ثاني أكسيد الكربون مرتفع! سيتم تشغيل المروحة");
           // check CO2 and fan status and switch status
         } else if ((co2 <= 1000) & (status == '1') & (isSwitchOn == '0')) {
           fan.turnOff();
@@ -31,13 +32,10 @@ class Controller {
     });
   }
 
-  sendNotification() {
+  sendNotification(String text) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
-          id: 10,
-          channelKey: "default_channel",
-          title: "تنبيه!",
-          body: "مستوى ثاني أكسيد الكربون مرتفع! سيتم تشغيل المروحة"),
+          id: 10, channelKey: "default_channel", title: "تنبيه!", body: text),
     );
   }
 }

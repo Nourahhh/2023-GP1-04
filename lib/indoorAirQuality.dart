@@ -208,7 +208,7 @@ class IndoorAirQuality {
             children: [
               if (title == 'درجة الحرارة')
                 Padding(
-                  padding: EdgeInsets.only(right: 20),
+                  padding: EdgeInsets.only(right: 20, left: 0),
                   child: Container(
                     width: 60,
                     height: 60,
@@ -228,7 +228,7 @@ class IndoorAirQuality {
                 ),
               if (title == 'مستوى الرطوبة')
                 Padding(
-                  padding: EdgeInsets.only(right: 20),
+                  padding: EdgeInsets.only(right: 20, left: 0),
                   child: Container(
                     width: 60,
                     height: 60,
@@ -248,7 +248,7 @@ class IndoorAirQuality {
                 ),
               if (title == 'ثاني أكسيد الكربون')
                 Padding(
-                  padding: EdgeInsets.only(right: 20),
+                  padding: EdgeInsets.only(right: 20, left: 0),
                   child: Container(
                     width: 60,
                     height: 60,
@@ -269,33 +269,65 @@ class IndoorAirQuality {
               Row(
                 children: [
                   Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /* Align(
-                        alignment: Alignment.centerRight,
-                        child: */
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                      ),
-                      // ),
-                      Row(
-                        children: [
-                          /*  Align(
-                            alignment: Alignment.centerRight,
-                            child: */
-                          Text(
-                            level,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: fontColor,
+                      if (title == 'درجة الحرارة')
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 40),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
-                          // ),
+                        ),
+                      if (title == 'مستوى الرطوبة')
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (title == 'ثاني أكسيد الكربون')
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 0),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              level,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: fontColor,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],

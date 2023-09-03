@@ -28,6 +28,10 @@ class _IndoorPageState extends State<IndoorPage>
       var co2 = reading[2];
       controller.checkAirQualityData(co2);
     });
+    Future<String> fanStatus = firebase.getStatus();
+    fanStatus.then((value) {
+      status = value;
+    });
   }
 
   @override
@@ -79,7 +83,7 @@ class _IndoorPageState extends State<IndoorPage>
                                       readings, context),
                                 ],
                               ),
-                              Row(children: [controlFan()]),
+                              Row(children: [controlFanWidget()]),
                             ]);
                           }
                         },
@@ -95,12 +99,12 @@ class _IndoorPageState extends State<IndoorPage>
     );
   }
 
-  Widget controlFan() {
+  Widget controlFanWidget() {
     Future<String> fanStatus = firebase.getStatus();
     fanStatus.then((value) {
       status = value;
     });
-    print(status);
+
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 2),
       child: Container(
@@ -143,40 +147,44 @@ class _IndoorPageState extends State<IndoorPage>
             Row(
               children: [
                 Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /* Align(
-                        alignment: Alignment.centerRight,
-                        child: */
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Text(
-                        'المروحة',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 18,
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Text(
+                          'المروحة',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                    // ),
                     Row(
                       children: [
-                        /*  Align(
-                            alignment: Alignment.centerRight,
-                            child: */
                         if (status == '0')
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              ' قيد الإيقاف',
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: Text(
+                                'قيد الإيقاف',
+                              ),
                             ),
                           ),
                         if (status == '1')
-                          Text(
-                            ' قيد التشغيل',
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 70),
+                              child: Text(
+                                'قيد التشغيل',
+                              ),
+                            ),
                           ),
-                        // ),
                       ],
                     ),
                   ],
