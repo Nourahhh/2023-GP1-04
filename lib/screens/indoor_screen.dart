@@ -108,7 +108,7 @@ class _IndoorPageState extends State<IndoorPage>
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 2),
       child: Container(
-        width: 340, // Adjust the width as needed
+        width: 310, // Adjust the width as needed
         height: 100, // Adjust the height as needed
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 251, 251, 251),
@@ -158,7 +158,7 @@ class _IndoorPageState extends State<IndoorPage>
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),

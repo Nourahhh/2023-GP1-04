@@ -191,7 +191,7 @@ class IndoorAirQuality {
           padding: const EdgeInsets.symmetric(
             vertical: 23,
           ),
-          width: 340,
+          width: 312,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(22),
@@ -281,7 +281,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -296,7 +296,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -311,7 +311,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
