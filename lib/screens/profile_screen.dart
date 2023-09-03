@@ -147,18 +147,18 @@ class _profilePageState extends State<profilePage> {
                                     ),
                                   ),
                                   TextButton(
-  onPressed: () {
-    if (newValue1 != null && newValue1.isNotEmpty) {
-      updateFirstName(newValue1);
-    }
-    Navigator.of(context).pop();
-  },
-  child: Text(
-    'حفظ',
-    style: TextStyle(color: Colors.blue),
-  ),
-),
-
+                                    onPressed: () {
+                                      if (newValue1 != null &&
+                                          newValue1.isNotEmpty) {
+                                        updateFirstName(newValue1);
+                                      }
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'حفظ',
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                  ),
                                 ],
                               ),
                             );
@@ -223,10 +223,10 @@ class _profilePageState extends State<profilePage> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                       if (newValue1 != null) {
-                                      updateLastName(newValue2);
-                                      Navigator.of(context).pop();
-                                       }
+                                      if (newValue1 != null) {
+                                        updateLastName(newValue2);
+                                        Navigator.of(context).pop();
+                                      }
                                     },
                                     child: Text(
                                       'حفظ',
@@ -285,7 +285,7 @@ class _profilePageState extends State<profilePage> {
           Container(
             child: Text('الحالة الصحية', style: TextStyle(fontSize: 25)),
           ),
-                    Row(
+          Row(
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
@@ -293,7 +293,7 @@ class _profilePageState extends State<profilePage> {
                 child: Text(
                   'هل تعاني من ظروف صحية تنفسية؟',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -338,7 +338,7 @@ class _profilePageState extends State<profilePage> {
                   });
                 },
                 child: Container(
-                  width: 95,
+                  width: 85,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: Color.fromARGB(255, 43, 138, 159)),
@@ -359,8 +359,10 @@ class _profilePageState extends State<profilePage> {
                               child: Text(
                             'نعم',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: val ? Colors.black : Colors.white),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: val ? Colors.black : Colors.white,
+                            ),
                           )),
                         ),
                         Container(
@@ -376,6 +378,7 @@ class _profilePageState extends State<profilePage> {
                             'لا',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontSize: 12,
                                 color: val ? Colors.white : Colors.black),
                           )),
                         ),
@@ -394,7 +397,7 @@ class _profilePageState extends State<profilePage> {
                 child: Text(
                   'المستوى:',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -410,7 +413,12 @@ class _profilePageState extends State<profilePage> {
                 items: items.map((String items) {
                   return DropdownMenuItem(
                     value: items,
-                    child: Text(items),
+                    child: Text(
+                      items,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
                   );
                 }).toList(),
                 // After selecting the desired option,it will
@@ -424,8 +432,6 @@ class _profilePageState extends State<profilePage> {
               ),
             ],
           ),
-
-    
           Divider(
             color: Colors.grey[800], // Set the color to dark gray
           ),
