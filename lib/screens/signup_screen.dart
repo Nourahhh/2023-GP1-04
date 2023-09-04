@@ -288,7 +288,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onPressed: () async {
                           if (_key.currentState!.validate()) {
                             var firstName = _firstNameContoroller.text.trim();
-                            var listName = _lasttNameContoroller.text.trim();
+                            var lastName = _lasttNameContoroller.text.trim();
 
                             var userEmail = _emailController.text.trim();
                             var userPassword = _passwordController.text.trim();
@@ -308,7 +308,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                               .doc(value.user!.uid)
                                               .set({
                                             'firstName': firstName,
-                                            'listName': listName,
+                                            'lastName': lastName,
                                             'userEmail': userEmail,
                                             'healthStatus': 0,
                                           }),

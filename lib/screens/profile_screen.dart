@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:naqi_app/main.dart';
 
 class profilePage extends StatefulWidget {
   profilePage({Key? key}) : super(key: key);
@@ -11,14 +12,9 @@ class profilePage extends StatefulWidget {
 }
 
 class _profilePageState extends State<profilePage> {
-  var first_name;
-  var last_name;
-  var email;
   var newValue1;
   var newValue2;
 
-  //اسوي لها رتريف من الداتابيس
-  bool val = false;
   // Initial Selected Value
   String dropdownvalue = 'خفيف';
 
@@ -32,51 +28,17 @@ class _profilePageState extends State<profilePage> {
   @override
   void initState() {
     super.initState();
-    getUserInfo();
   }
 
-  void getUserInfo() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userId = user.uid;
-      final userInfo = await fetchUserInfo(userId);
-      setState(() {
-        first_name = userInfo.data()!['firstName'];
-        last_name = userInfo.data()!['listName'];
-        email = userInfo.data()!['userEmail'];
-      });
-    }
-  }
-
-  Future<DocumentSnapshot<Map<String, dynamic>>> fetchUserInfo(
-      String userId) async {
-    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
-    final userSnapshot = await userRef.get();
-    return userSnapshot;
-  }
-
-  void updateFirstName(String newFirstName) async {
+  void updateInfo(String feild, var feildValue) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       final userId = user.uid;
       final userRef =
           FirebaseFirestore.instance.collection('users').doc(userId);
-      await userRef.update({'firstName': newFirstName});
+      await userRef.update({feild: feildValue});
       setState(() {
-        first_name = newFirstName;
-      });
-    }
-  }
-
-  void updateLastName(String newLastName) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userId = user.uid;
-      final userRef =
-          FirebaseFirestore.instance.collection('users').doc(userId);
-      await userRef.update({'listName': newLastName});
-      setState(() {
-        last_name = newLastName;
+        feild = feildValue;
       });
     }
   }
@@ -117,7 +79,7 @@ class _profilePageState extends State<profilePage> {
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(first_name ?? ""),
+                          title: Text(MyApp.first_name ?? ""),
                           trailing: Icon(Icons.edit),
                           onTap: () {
                             showDialog(
@@ -125,8 +87,8 @@ class _profilePageState extends State<profilePage> {
                               builder: (context) => AlertDialog(
                                 title: Text('تعديل الاسم الأول'),
                                 content: TextField(
-                                  controller:
-                                      TextEditingController(text: first_name),
+                                  controller: TextEditingController(
+                                      text: MyApp.first_name),
                                   onChanged: (value) {
                                     setState(() {
                                       newValue1 = value;
@@ -150,7 +112,8 @@ class _profilePageState extends State<profilePage> {
                                     onPressed: () {
                                       if (newValue1 != null &&
                                           newValue1.isNotEmpty) {
-                                        updateFirstName(newValue1);
+                                        updateInfo('firstName', newValue1);
+                                        MyApp.first_name = newValue1;
                                       }
                                       Navigator.of(context).pop();
                                     },
@@ -192,7 +155,7 @@ class _profilePageState extends State<profilePage> {
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(last_name ?? ""),
+                          title: Text(MyApp.last_name ?? ""),
                           trailing: Icon(Icons.edit),
                           onTap: () {
                             showDialog(
@@ -200,8 +163,8 @@ class _profilePageState extends State<profilePage> {
                               builder: (context) => AlertDialog(
                                 title: Text('تعديل الاسم الأخير'),
                                 content: TextField(
-                                  controller:
-                                      TextEditingController(text: last_name),
+                                  controller: TextEditingController(
+                                      text: MyApp.last_name),
                                   onChanged: (value) {
                                     setState(() {
                                       newValue2 = value;
@@ -225,7 +188,8 @@ class _profilePageState extends State<profilePage> {
                                     onPressed: () {
                                       if (newValue2 != null &&
                                           newValue2.isNotEmpty) {
-                                        updateLastName(newValue2);
+                                        updateInfo('lastName', newValue2);
+                                        MyApp.last_name = newValue2;
                                       }
                                       Navigator.of(context).pop();
                                     },
@@ -266,7 +230,7 @@ class _profilePageState extends State<profilePage> {
                         child: ListTile(
                           leading: Icon(Icons.email),
                           title: Text(
-                            email ?? "",
+                            MyApp.email ?? "",
                             style: TextStyle(
                               color: Colors
                                   .grey[600], // Set the color to dark grey
@@ -298,44 +262,11 @@ class _profilePageState extends State<profilePage> {
                   ),
                 ),
               ),
-              /* Switch(
-                activeColor: const Color.fromARGB(255, 255, 255, 255),
-                activeTrackColor: const Color(0xff45A1B6),
-                inactiveThumbColor: Colors.blueGrey.shade600,
-                inactiveTrackColor: Colors.grey.shade400,
-                splashRadius: 50.0,
-                value: healthStatus,
-                onChanged: (value) => setState(() {
-                  if (value) {
-                    // اسوي لها ابديت بالداتابيس
-                    healthStatus = true;
-                  } else {
-                    // اسوي لها ابديت بالداتابيس
-                    healthStatus = false;
-                  }
-                }),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Off'),
-                  Switch(
-                    value: val,
-                    onChanged: (value) {
-                      setState(() {
-                        val = value;
-                      });
-                    },
-                  ),
-                  Text('On'),
-                ],
-              ),*/
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    val = !val;
-                    //setHealthStatus(val)
-                    //
+                    MyApp.healthStatus = !MyApp.healthStatus;
+                    updateInfo('healthStatus', MyApp.healthStatus);
                   });
                 },
                 child: Container(
@@ -353,7 +284,7 @@ class _profilePageState extends State<profilePage> {
                           height: 25,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: val
+                              color: MyApp.healthStatus
                                   ? Colors.white
                                   : Color.fromARGB(255, 43, 138, 159)),
                           child: Center(
@@ -362,7 +293,9 @@ class _profilePageState extends State<profilePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
-                              color: val ? Colors.black : Colors.white,
+                              color: MyApp.healthStatus
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                           )),
                         ),
@@ -371,7 +304,7 @@ class _profilePageState extends State<profilePage> {
                           height: 25,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: val
+                              color: MyApp.healthStatus
                                   ? Color.fromARGB(255, 43, 138, 159)
                                   : Colors.white),
                           child: Center(
@@ -380,7 +313,9 @@ class _profilePageState extends State<profilePage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
-                                color: val ? Colors.white : Colors.black),
+                                color: MyApp.healthStatus
+                                    ? Colors.white
+                                    : Colors.black),
                           )),
                         ),
                       ],
