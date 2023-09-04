@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:naqi_app/main.dart';
+import 'package:naqi_app/firebase.dart';
 
 class profilePage extends StatefulWidget {
   profilePage({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _profilePageState extends State<profilePage> {
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(MyApp.first_name ?? ""),
+                          title: Text(FirebaseService.first_name ?? ""),
                           trailing: Icon(Icons.edit),
                           onTap: () {
                             showDialog(
@@ -88,7 +88,7 @@ class _profilePageState extends State<profilePage> {
                                 title: Text('تعديل الاسم الأول'),
                                 content: TextField(
                                   controller: TextEditingController(
-                                      text: MyApp.first_name),
+                                      text: FirebaseService.first_name),
                                   onChanged: (value) {
                                     setState(() {
                                       newValue1 = value;
@@ -113,7 +113,7 @@ class _profilePageState extends State<profilePage> {
                                       if (newValue1 != null &&
                                           newValue1.isNotEmpty) {
                                         updateInfo('firstName', newValue1);
-                                        MyApp.first_name = newValue1;
+                                        FirebaseService.first_name = newValue1;
                                       }
                                       Navigator.of(context).pop();
                                     },
@@ -155,7 +155,7 @@ class _profilePageState extends State<profilePage> {
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(MyApp.last_name ?? ""),
+                          title: Text(FirebaseService.last_name ?? ""),
                           trailing: Icon(Icons.edit),
                           onTap: () {
                             showDialog(
@@ -164,7 +164,7 @@ class _profilePageState extends State<profilePage> {
                                 title: Text('تعديل الاسم الأخير'),
                                 content: TextField(
                                   controller: TextEditingController(
-                                      text: MyApp.last_name),
+                                      text: FirebaseService.last_name),
                                   onChanged: (value) {
                                     setState(() {
                                       newValue2 = value;
@@ -189,7 +189,7 @@ class _profilePageState extends State<profilePage> {
                                       if (newValue2 != null &&
                                           newValue2.isNotEmpty) {
                                         updateInfo('lastName', newValue2);
-                                        MyApp.last_name = newValue2;
+                                        FirebaseService.last_name = newValue2;
                                       }
                                       Navigator.of(context).pop();
                                     },
@@ -230,7 +230,7 @@ class _profilePageState extends State<profilePage> {
                         child: ListTile(
                           leading: Icon(Icons.email),
                           title: Text(
-                            MyApp.email ?? "",
+                            FirebaseService.email ?? "",
                             style: TextStyle(
                               color: Colors
                                   .grey[600], // Set the color to dark grey
@@ -265,8 +265,9 @@ class _profilePageState extends State<profilePage> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    MyApp.healthStatus = !MyApp.healthStatus;
-                    updateInfo('healthStatus', MyApp.healthStatus);
+                    FirebaseService.healthStatus =
+                        !FirebaseService.healthStatus;
+                    updateInfo('healthStatus', FirebaseService.healthStatus);
                   });
                 },
                 child: Container(
@@ -284,7 +285,7 @@ class _profilePageState extends State<profilePage> {
                           height: 25,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: MyApp.healthStatus
+                              color: FirebaseService.healthStatus
                                   ? Colors.white
                                   : Color.fromARGB(255, 43, 138, 159)),
                           child: Center(
@@ -293,7 +294,7 @@ class _profilePageState extends State<profilePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
-                              color: MyApp.healthStatus
+                              color: FirebaseService.healthStatus
                                   ? Colors.black
                                   : Colors.white,
                             ),
@@ -304,7 +305,7 @@ class _profilePageState extends State<profilePage> {
                           height: 25,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: MyApp.healthStatus
+                              color: FirebaseService.healthStatus
                                   ? Color.fromARGB(255, 43, 138, 159)
                                   : Colors.white),
                           child: Center(
@@ -313,7 +314,7 @@ class _profilePageState extends State<profilePage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
-                                color: MyApp.healthStatus
+                                color: FirebaseService.healthStatus
                                     ? Colors.white
                                     : Colors.black),
                           )),

@@ -1,7 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseService {
+  static var healthStatus = false;
+  static var first_name;
+  static var last_name;
+  static var email;
+
   //DatabaseReference databaseRef;
   static Future<void> initialize() async {
     await Firebase.initializeApp(
@@ -13,6 +20,26 @@ class FirebaseService {
         databaseURL: 'https://fairbase-naqi-app-default-rtdb.firebaseio.com',
       ),
     );
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchUserInfo(
+      String userId) async {
+    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    final userSnapshot = await userRef.get();
+    return userSnapshot;
+  }
+
+  void getUserInfo() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+      final userInfo = await fetchUserInfo(userId);
+
+      first_name = userInfo.data()!['firstName'];
+      last_name = userInfo.data()!['lastName'];
+      email = userInfo.data()!['userEmail'];
+      healthStatus = userInfo.data()!['healthStatus'];
+    }
   }
 
   Future<String> getStatus() async {
