@@ -30,7 +30,7 @@ class _profilePageState extends State<profilePage> {
     super.initState();
   }
 
-  void updateInfo(String feild, var feildValue) async {
+  void updateInfo(var feild, var feildValue) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       final userId = user.uid;

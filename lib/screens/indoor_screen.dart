@@ -24,7 +24,7 @@ class _IndoorPageState extends State<IndoorPage>
     sensor.getReadings().listen((data) {
       // This callback function is called every time new data is received from the stream
       var jsonData = jsonDecode(data);
-      List<int> reading = sensorReadings.readData(jsonData);
+      List<dynamic> reading = sensorReadings.readData(jsonData);
       var co2 = reading[2];
       controller.checkAirQualityData(co2);
     });
@@ -71,10 +71,17 @@ class _IndoorPageState extends State<IndoorPage>
                             return CircularProgressIndicator();
                           } else {
                             var data = jsonDecode(snapshot.data.toString());
-                            List<int> readings = sensorReadings.readData(data);
+                            List<dynamic> readings =
+                                sensorReadings.readData(data);
                             List<String> levels =
                                 sensorReadings.calculateLevel(readings);
+
                             return Column(children: [
+                              Row(
+                                children: [
+                                  sensorReadings.checkTime(readings[3]),
+                                ],
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

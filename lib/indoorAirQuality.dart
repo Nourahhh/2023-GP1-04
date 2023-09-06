@@ -7,6 +7,7 @@ class IndoorAirQuality {
   var co2 = 0;
   var temp = 0;
   var hum = 0;
+  var time = DateTime(2000);
 
   dynamic readData(dynamic data) {
     if (data.containsKey('uplink_message')) {
@@ -24,16 +25,30 @@ class IndoorAirQuality {
         }
       }
     }
-    List<int> readings = [
-      temp,
-      hum,
-      co2,
-    ];
-
+    time = DateTime.parse((data as Map)['received_at']);
+    List<dynamic> readings = [temp, hum, co2, time];
+    print(time);
     return readings;
   }
 
-  Widget viewIndoorAirQuality(List<int> readings, context) {
+  Widget checkTime(var time) {
+    DateTime currDt = DateTime.now();
+    var diffDt = currDt.difference(time);
+    var Min = diffDt.inMinutes;
+    if (Min >= 2) {
+      return Text(
+        'تعذر الوصول للمستشعر',
+        style: TextStyle(color: Colors.black),
+      );
+    } else {
+      return Text(
+        'تم الوصول للمستشعر',
+        style: TextStyle(color: Colors.black),
+      );
+    }
+  }
+
+  Widget viewIndoorAirQuality(List<dynamic> readings, context) {
     List<String> levels = calculateLevel(readings);
     Map<String, Color> airQuality_color = calculateAirQuality(levels);
     String airQuality = airQuality_color.keys.first;
@@ -117,7 +132,7 @@ class IndoorAirQuality {
     );
   }
 
-  List<double> calculatePercentege(List<int> readings) {
+  List<double> calculatePercentege(List<dynamic> readings) {
     List<double> percentages = [];
     // temp percentage
     percentages.add(readings[0] / 40);
@@ -131,7 +146,7 @@ class IndoorAirQuality {
     return percentages;
   }
 
-  List<String> calculateLevel(List<int> readings) {
+  List<String> calculateLevel(List<dynamic> readings) {
     List<String> levels = [];
     // temprature level
     if (readings[0] < 10) {
