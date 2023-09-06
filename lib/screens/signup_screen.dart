@@ -311,6 +311,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                             'lastName': lastName,
                                             'userEmail': userEmail,
                                             'healthStatus': false,
+                                            'healthStatusLevel': 'خفيف',
                                           }),
                                           // ignore: avoid_print
                                           print("data added"),

@@ -16,7 +16,7 @@ class _profilePageState extends State<profilePage> {
   var newValue2;
 
   // Initial Selected Value
-  String dropdownvalue = 'خفيف';
+  String dropdownvalue = FirebaseService.healthStatusLevel;
 
   // List of items in our dropdown menu
   var items = [
@@ -268,6 +268,9 @@ class _profilePageState extends State<profilePage> {
                     FirebaseService.healthStatus =
                         !FirebaseService.healthStatus;
                     updateInfo('healthStatus', FirebaseService.healthStatus);
+                    if (!FirebaseService.healthStatus)
+                      updateInfo('healthStatusLevel', 'خفيف');
+                    dropdownvalue = 'خفيف';
                   });
                 },
                 child: Container(
@@ -326,49 +329,50 @@ class _profilePageState extends State<profilePage> {
               ),
             ],
           ),
-          Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0, left: 20),
-                child: Text(
-                  'المستوى:',
-                  style: TextStyle(
-                    fontSize: 16,
+          if (FirebaseService.healthStatus == true)
+            Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0, left: 20),
+                  child: Text(
+                    'المستوى:',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-              DropdownButton(
-                // Initial Value
-                //retrive level
-                value: dropdownvalue,
-
-                // Down Arrow Icon
-                icon: const Icon(Icons.keyboard_arrow_down),
-                borderRadius: BorderRadius.circular(10),
-                // Array list of items
-                items: items.map((String items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(
-                      items,
-                      style: TextStyle(
-                        fontSize: 16,
+                DropdownButton(
+                  // Initial Value
+                  value: dropdownvalue,
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  borderRadius: BorderRadius.circular(10),
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(
+                        items,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
-                // After selecting the desired option,it will
-                // change button value to selected value
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownvalue = newValue!;
-                    //setLvel(dropdownvalue)
-                  });
-                },
-              ),
-            ],
-          ),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                      FirebaseService.healthStatusLevel = dropdownvalue;
+                      updateInfo('healthStatusLevel',
+                          FirebaseService.healthStatusLevel);
+                    });
+                  },
+                ),
+              ],
+            ),
           Divider(
             color: Colors.grey[800], // Set the color to dark gray
           ),

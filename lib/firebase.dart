@@ -4,10 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseService {
-  static var healthStatus = false;
   static var first_name;
   static var last_name;
   static var email;
+  static var healthStatus = false;
+  static var healthStatusLevel;
 
   //DatabaseReference databaseRef;
   static Future<void> initialize() async {
@@ -39,6 +40,7 @@ class FirebaseService {
       last_name = userInfo.data()!['lastName'];
       email = userInfo.data()!['userEmail'];
       healthStatus = userInfo.data()!['healthStatus'];
+      healthStatusLevel = userInfo.data()!['healthStatusLevel'];
     }
   }
 
