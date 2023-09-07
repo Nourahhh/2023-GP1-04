@@ -68,7 +68,16 @@ class _IndoorPageState extends State<IndoorPage>
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             print("no data");
-                            return CircularProgressIndicator();
+                            return Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 150.0, left: 150),
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.blue),
+                                  ),
+                                ));
                           } else {
                             var data = jsonDecode(snapshot.data.toString());
                             List<dynamic> readings =
