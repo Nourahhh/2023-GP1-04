@@ -254,7 +254,7 @@ class _profilePageState extends State<profilePage> {
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 20.0, left: 20),
+                padding: const EdgeInsets.only(right: 35.0),
                 child: Text(
                   'هل تعاني من ظروف صحية تنفسية؟',
                   style: TextStyle(
@@ -273,56 +273,59 @@ class _profilePageState extends State<profilePage> {
                     dropdownvalue = 'خفيف';
                   });
                 },
-                child: Container(
-                  width: 85,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Color.fromARGB(255, 43, 138, 159)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 35,
-                          height: 25,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: FirebaseService.healthStatus
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 43, 138, 159)),
-                          child: Center(
-                              child: Text(
-                            'نعم',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: FirebaseService.healthStatus
-                                  ? Colors.black
-                                  : Colors.white,
-                            ),
-                          )),
-                        ),
-                        Container(
-                          width: 35,
-                          height: 25,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: FirebaseService.healthStatus
-                                  ? Color.fromARGB(255, 43, 138, 159)
-                                  : Colors.white),
-                          child: Center(
-                              child: Text(
-                            'لا',
-                            style: TextStyle(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    width: 65,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Color.fromARGB(255, 43, 138, 159)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: FirebaseService.healthStatus
+                                    ? Colors.white
+                                    : Color.fromARGB(255, 43, 138, 159)),
+                            child: Center(
+                                child: Text(
+                              'نعم',
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                                 color: FirebaseService.healthStatus
-                                    ? Colors.white
-                                    : Colors.black),
-                          )),
-                        ),
-                      ],
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
+                            )),
+                          ),
+                          Container(
+                            width: 25,
+                            height: 20,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: FirebaseService.healthStatus
+                                    ? Color.fromARGB(255, 43, 138, 159)
+                                    : Colors.white),
+                            child: Center(
+                                child: Text(
+                              'لا',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  color: FirebaseService.healthStatus
+                                      ? Colors.white
+                                      : Colors.black),
+                            )),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -334,7 +337,7 @@ class _profilePageState extends State<profilePage> {
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 20.0, left: 20),
+                  padding: const EdgeInsets.only(right: 35.0, left: 20),
                   child: Text(
                     'المستوى:',
                     style: TextStyle(
