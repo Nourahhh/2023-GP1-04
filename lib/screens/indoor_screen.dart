@@ -83,14 +83,14 @@ class _IndoorPageState extends State<IndoorPage>
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   sensorReadings.viewIndoorAirQuality(
                                       readings, context),
                                 ],
                               ),
-                              Row(children: [controlFanWidget()]),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [controlFanWidget()]),
                             ]);
                           }
                         },

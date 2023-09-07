@@ -87,7 +87,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
@@ -102,6 +102,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
@@ -116,6 +117,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
