@@ -50,7 +50,10 @@ class _profilePageState extends State<profilePage> {
       child: Column(
         children: [
           Container(
-            child: Text('المعلومات الشخصية', style: TextStyle(fontSize: 25)),
+            child: Text(
+              'المعلومات الشخصية',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -64,7 +67,7 @@ class _profilePageState extends State<profilePage> {
                       Text(
                         'الاسم الأول',
                         style: TextStyle(
-                          // fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -140,7 +143,7 @@ class _profilePageState extends State<profilePage> {
                       Text(
                         'الاسم الأخير',
                         style: TextStyle(
-                          // fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -215,9 +218,7 @@ class _profilePageState extends State<profilePage> {
                     children: [
                       Text('البريد الإلكتروني',
                           style: TextStyle(
-                            fontSize: 16,
-                            //fontWeight: FontWeight.bold
-                          )),
+                              fontSize: 16, fontWeight: FontWeight.bold)),
                       SizedBox(height: 1),
                       Container(
                         decoration: BoxDecoration(
@@ -241,144 +242,114 @@ class _profilePageState extends State<profilePage> {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Divider(
-            color: Colors.grey[800],
-          ),
-          Container(
-            child: Text('الحالة الصحية', style: TextStyle(fontSize: 25)),
-          ),
-          Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 35.0),
-                child: Text(
-                  'هل تعاني من ظروف صحية تنفسية؟',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    FirebaseService.healthStatus =
-                        !FirebaseService.healthStatus;
-                    updateInfo('healthStatus', FirebaseService.healthStatus);
-                    if (!FirebaseService.healthStatus)
-                      updateInfo('healthStatusLevel', 'خفيف');
-                    dropdownvalue = 'خفيف';
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Container(
-                    width: 65,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Color.fromARGB(255, 43, 138, 159)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12, right: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: 25,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: FirebaseService.healthStatus
-                                    ? Colors.white
-                                    : Color.fromARGB(255, 43, 138, 159)),
-                            child: Center(
-                                child: Text(
-                              'نعم',
+                          Text('الحالة الصحية',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: FirebaseService.healthStatus
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                            )),
-                          ),
-                          Container(
-                            width: 25,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: FirebaseService.healthStatus
-                                    ? Color.fromARGB(255, 43, 138, 159)
-                                    : Colors.white),
-                            child: Center(
-                                child: Text(
-                              'لا',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: FirebaseService.healthStatus
-                                      ? Colors.white
-                                      : Colors.black),
-                            )),
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          Switch(
+                            activeColor:
+                                const Color.fromARGB(255, 255, 255, 255),
+                            activeTrackColor: const Color(0xff45A1B6),
+                            inactiveThumbColor: Colors.blueGrey.shade600,
+                            inactiveTrackColor: Colors.grey.shade400,
+                            splashRadius: 50.0,
+                            value: FirebaseService.healthStatus,
+                            onChanged: (value) => setState(() {
+                              FirebaseService.healthStatus =
+                                  !FirebaseService.healthStatus;
+                              updateInfo(
+                                  'healthStatus', FirebaseService.healthStatus);
+                              if (!FirebaseService.healthStatus)
+                                updateInfo('healthStatusLevel', 'خفيف');
+                              dropdownvalue = 'خفيف';
+                              // FirebaseService.healthStatus = value;
+                            }),
                           ),
                         ],
                       ),
-                    ),
+                      SizedBox(height: 1),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          if (FirebaseService.healthStatus == true)
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 35.0, left: 20),
-                  child: Text(
-                    'المستوى:',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                DropdownButton(
-                  // Initial Value
-                  value: dropdownvalue,
-                  // Down Arrow Icon
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  borderRadius: BorderRadius.circular(10),
-                  // Array list of items
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(
-                        items,
-                        style: TextStyle(
-                          fontSize: 16,
+                SizedBox(height: 10),
+                if (FirebaseService.healthStatus == true)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('مستوى الحالة الصحية',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 1),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.health_and_safety),
+                            title: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none, // Remove the border
+                                contentPadding:
+                                    EdgeInsets.zero, // Remove padding
+                              ),
+
+                              // Initial Value
+                              value: dropdownvalue,
+                              // Down Arrow Icon
+                              icon: const Icon(Icons.keyboard_arrow_down),
+
+                              // Array list of items
+                              items: items.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(
+                                    items,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              // After selecting the desired option,it will
+                              // change button value to selected value
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownvalue = newValue!;
+                                  FirebaseService.healthStatusLevel =
+                                      dropdownvalue;
+                                  updateInfo('healthStatusLevel',
+                                      FirebaseService.healthStatusLevel);
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                      FirebaseService.healthStatusLevel = dropdownvalue;
-                      updateInfo('healthStatusLevel',
-                          FirebaseService.healthStatusLevel);
-                    });
-                  },
-                ),
+                      ],
+                    ),
+                  ),
               ],
             ),
-          Divider(
-            color: Colors.grey[800], // Set the color to dark gray
           ),
+
+          /* Divider(
+            color: Colors.grey[800], // Set the color to dark gray
+          ),*/
+          SizedBox(height: 20),
           Container(
             child: ElevatedButton(
               onPressed: () {
