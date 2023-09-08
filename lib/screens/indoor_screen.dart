@@ -72,10 +72,12 @@ class _IndoorPageState extends State<IndoorPage>
                                 height: 40,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 150.0, left: 150),
+                                      right: 135.0, left: 135),
                                   child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.blue),
+                                      Colors.grey,
+                                    ),
+                                    strokeWidth: 2.0,
                                   ),
                                 ));
                           } else {
