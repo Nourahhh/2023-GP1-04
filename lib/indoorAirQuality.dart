@@ -377,25 +377,28 @@ class IndoorAirQuality {
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 1),
+            child: infoWidget(context,
+                ' - يعتبر مستوى درجة الحرارة بارد إذا كان أقل من ١٠  \n - يعتبر مستوى درجة الحرارة معتدل إذا كان أعلى من أو يساوي ١٠ وأقل من ٢٨ \n  - يعتبر مستوى درجة الحرارة حار إذا كان أعلى من أو يساوي ٢٨'),
           ),
         if (title == 'مستوى الرطوبة')
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 2),
+            child: infoWidget(context,
+                ' - يعتبر مستوى الرطوبة منخفض إذا كان أقل من ٣٠  \n - يعتبر مستوى الرطوبة متوسط إذا كان أعلى من أو يساوي ٣٠ وأقل من أو يساوي ٦٠  \n  - يعتبر مستوى الرطوبة عالي إذا كان أعلى من ٦٠'),
           ),
         if (title == 'ثاني أكسيد الكربون')
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 3),
+            child: infoWidget(context,
+                'يمكن أن تؤثر المستويات العالية من ثاني أكسيد الكربون في الهواء الداخلي سلبًا على جودة الهواء وقد تضر بصحة الإنسان. \n تشمل الأعراض الشائعة المرتبطة بارتفاع مستويات ثاني أكسيد الكربون الصداع والتعب والغثيان والإغماء.  \n - يعتبر مستوى ثاني أكسيد الكربون ممتاز إذا كان اقل من أو يساي ١٠٠٠  \n - يعتبر مستوى ثاني أكسيد الكربون ملوث إذا كان أعلى من ١٠٠٠ وأقل من ١٥٠٠ \n  - يعتبر مستوى ثاني أكسيد الكربون ملوث جدًا إذا كان أعلى من أو يساوي ١٥٠٠'),
           ),
       ],
     );
   }
 
-  Widget myWidget(BuildContext context, int type) {
+  Widget infoWidget(BuildContext context, String text) {
     return IconButton(
       onPressed: () {
         showModalBottomSheet(
@@ -409,34 +412,13 @@ class IndoorAirQuality {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // temp
-                if (type == 1)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      ' - يعتبر مستوى درجة الحرارة بارد إذا كان أقل من ١٠  \n - يعتبر مستوى درجة الحرارة معتدل إذا كان أعلى من أو يساوي ١٠ وأقل من ٢٨ \n  - يعتبر مستوى درجة الحرارة حار إذا كان أعلى من أو يساوي ٢٨',
-                      textAlign: TextAlign.center,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
                   ),
-                // temp
-                if (type == 2)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      ' - يعتبر مستوى الرطوبة منخفض إذا كان أقل من ٣٠  \n - يعتبر مستوى الرطوبة متوسط إذا كان أعلى من أو يساوي ٣٠ وأقل من أو يساوي ٦٠  \n  - يعتبر مستوى الرطوبة عالي إذا كان أعلى من ٦٠',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                // CO2
-                if (type == 3)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      'يمكن أن تؤثر المستويات العالية من ثاني أكسيد الكربون في الهواء الداخلي سلبًا على جودة الهواء وقد تضر بصحة الإنسان. \n تشمل الأعراض الشائعة المرتبطة بارتفاع مستويات ثاني أكسيد الكربون الصداع والتعب والغثيان والإغماء.  \n - يعتبر مستوى ثاني أكسيد الكربون ممتاز إذا كان اقل من أو يساي ١٠٠٠  \n - يعتبر مستوى ثاني أكسيد الكربون ملوث إذا كان أعلى من ١٠٠٠ وأقل من ١٥٠٠ \n  - يعتبر مستوى ثاني أكسيد الكربون ملوث جدًا إذا كان أعلى من أو يساوي ١٥٠٠',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
+                ),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
