@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:naqi_app/firebase.dart';
+import 'package:naqi_app/indoorAirQuality.dart';
 
 class profilePage extends StatefulWidget {
   profilePage({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class profilePage extends StatefulWidget {
 }
 
 class _profilePageState extends State<profilePage> {
+  IndoorAirQuality indoorAirQuality = IndoorAirQuality();
   var newValue1;
   var newValue2;
 
@@ -52,7 +54,7 @@ class _profilePageState extends State<profilePage> {
           Container(
             child: Text(
               'المعلومات الشخصية',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
@@ -242,7 +244,13 @@ class _profilePageState extends State<profilePage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0, left: 20),
+                  child: Divider(
+                    color: Colors.grey[800], // Set the color to dark gray
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 12, right: 20),
                   child: Column(
@@ -251,7 +259,7 @@ class _profilePageState extends State<profilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('الحالة الصحية',
+                          Text('هل تعاني من ظروف صحية تنفسية؟',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                           Switch(
@@ -279,16 +287,20 @@ class _profilePageState extends State<profilePage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
                 if (FirebaseService.healthStatus == true)
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('مستوى الحالة الصحية',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            Text('مستوى الحالة الصحية',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                            indoorAirQuality.infoWidget(context, ''),
+                          ],
+                        ),
                         SizedBox(height: 1),
                         Container(
                           decoration: BoxDecoration(
@@ -345,10 +357,13 @@ class _profilePageState extends State<profilePage> {
               ],
             ),
           ),
-
-          /* Divider(
-            color: Colors.grey[800], // Set the color to dark gray
-          ),*/
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(right: 30.0, left: 30),
+            child: Divider(
+              color: Colors.grey[800], // Set the color to dark gray
+            ),
+          ),
           SizedBox(height: 20),
           Container(
             child: ElevatedButton(
