@@ -24,7 +24,7 @@ class _IndoorPageState extends State<IndoorPage>
     sensor.getReadings().listen((data) {
       // This callback function is called every time new data is received from the stream
       var jsonData = jsonDecode(data);
-      List<int> reading = sensorReadings.readData(jsonData);
+      List<dynamic> reading = sensorReadings.readData(jsonData);
       var co2 = reading[2];
       controller.checkAirQualityData(co2);
     });
@@ -68,22 +68,40 @@ class _IndoorPageState extends State<IndoorPage>
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             print("no data");
-                            return CircularProgressIndicator();
+                            return Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 135.0, left: 135),
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.grey,
+                                    ),
+                                    strokeWidth: 2.0,
+                                  ),
+                                ));
                           } else {
                             var data = jsonDecode(snapshot.data.toString());
-                            List<int> readings = sensorReadings.readData(data);
+                            List<dynamic> readings =
+                                sensorReadings.readData(data);
                             List<String> levels =
                                 sensorReadings.calculateLevel(readings);
+
                             return Column(children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  sensorReadings.checkTime(readings[3]),
+                                ],
+                              ),
+                              Row(
                                 children: [
                                   sensorReadings.viewIndoorAirQuality(
                                       readings, context),
                                 ],
                               ),
-                              Row(children: [controlFanWidget()]),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [controlFanWidget()]),
                             ]);
                           }
                         },
@@ -108,7 +126,7 @@ class _IndoorPageState extends State<IndoorPage>
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 2),
       child: Container(
-        width: 340, // Adjust the width as needed
+        width: 310, // Adjust the width as needed
         height: 100, // Adjust the height as needed
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 251, 251, 251),
@@ -158,7 +176,7 @@ class _IndoorPageState extends State<IndoorPage>
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                       ),

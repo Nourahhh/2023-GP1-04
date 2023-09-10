@@ -7,6 +7,7 @@ class IndoorAirQuality {
   var co2 = 0;
   var temp = 0;
   var hum = 0;
+  var time = DateTime(2000);
 
   dynamic readData(dynamic data) {
     if (data.containsKey('uplink_message')) {
@@ -24,16 +25,30 @@ class IndoorAirQuality {
         }
       }
     }
-    List<int> readings = [
-      temp,
-      hum,
-      co2,
-    ];
-
+    time = DateTime.parse((data as Map)['received_at']);
+    List<dynamic> readings = [temp, hum, co2, time];
+    print(time);
     return readings;
   }
 
-  Widget viewIndoorAirQuality(List<int> readings, context) {
+  Widget checkTime(var time) {
+    DateTime currDt = DateTime.now();
+    var diffDt = currDt.difference(time);
+    var Min = diffDt.inMinutes;
+    if (Min >= 2) {
+      return Text(
+        'تعذر الوصول للمستشعر',
+        style: TextStyle(color: Colors.black),
+      );
+    } else {
+      return Text(
+        'تم الوصول للمستشعر',
+        style: TextStyle(color: Colors.black),
+      );
+    }
+  }
+
+  Widget viewIndoorAirQuality(List<dynamic> readings, context) {
     List<String> levels = calculateLevel(readings);
     Map<String, Color> airQuality_color = calculateAirQuality(levels);
     String airQuality = airQuality_color.keys.first;
@@ -72,7 +87,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
@@ -87,6 +102,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
@@ -101,6 +117,7 @@ class IndoorAirQuality {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _cardMenu(
                   context: context,
@@ -117,7 +134,7 @@ class IndoorAirQuality {
     );
   }
 
-  List<double> calculatePercentege(List<int> readings) {
+  List<double> calculatePercentege(List<dynamic> readings) {
     List<double> percentages = [];
     // temp percentage
     percentages.add(readings[0] / 40);
@@ -131,7 +148,7 @@ class IndoorAirQuality {
     return percentages;
   }
 
-  List<String> calculateLevel(List<int> readings) {
+  List<String> calculateLevel(List<dynamic> readings) {
     List<String> levels = [];
     // temprature level
     if (readings[0] < 10) {
@@ -191,7 +208,7 @@ class IndoorAirQuality {
           padding: const EdgeInsets.symmetric(
             vertical: 23,
           ),
-          width: 340,
+          width: 312,
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(22),
@@ -281,7 +298,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -296,7 +313,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -311,7 +328,7 @@ class IndoorAirQuality {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -360,25 +377,28 @@ class IndoorAirQuality {
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 1),
+            child: infoWidget(context,
+                ' - يعتبر مستوى درجة الحرارة بارد إذا كان أقل من ١٠  \n - يعتبر مستوى درجة الحرارة معتدل إذا كان أعلى من أو يساوي ١٠ وأقل من ٢٨ \n  - يعتبر مستوى درجة الحرارة حار إذا كان أعلى من أو يساوي ٢٨'),
           ),
         if (title == 'مستوى الرطوبة')
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 2),
+            child: infoWidget(context,
+                ' - يعتبر مستوى الرطوبة منخفض إذا كان أقل من ٣٠  \n - يعتبر مستوى الرطوبة متوسط إذا كان أعلى من أو يساوي ٣٠ وأقل من أو يساوي ٦٠  \n  - يعتبر مستوى الرطوبة عالي إذا كان أعلى من ٦٠'),
           ),
         if (title == 'ثاني أكسيد الكربون')
           Positioned(
             bottom: 0.0,
             left: 0.0,
-            child: myWidget(context, 3),
+            child: infoWidget(context,
+                'يمكن أن تؤثر المستويات العالية من ثاني أكسيد الكربون في الهواء الداخلي سلبًا على جودة الهواء وقد تضر بصحة الإنسان. \n تشمل الأعراض الشائعة المرتبطة بارتفاع مستويات ثاني أكسيد الكربون الصداع والتعب والغثيان والإغماء.  \n - يعتبر مستوى ثاني أكسيد الكربون ممتاز إذا كان اقل من أو يساي ١٠٠٠  \n - يعتبر مستوى ثاني أكسيد الكربون ملوث إذا كان أعلى من ١٠٠٠ وأقل من ١٥٠٠ \n  - يعتبر مستوى ثاني أكسيد الكربون ملوث جدًا إذا كان أعلى من أو يساوي ١٥٠٠'),
           ),
       ],
     );
   }
 
-  Widget myWidget(BuildContext context, int type) {
+  Widget infoWidget(BuildContext context, String text) {
     return IconButton(
       onPressed: () {
         showModalBottomSheet(
@@ -392,34 +412,13 @@ class IndoorAirQuality {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // temp
-                if (type == 1)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      ' - يعتبر مستوى درجة الحرارة بارد إذا كان أقل من ١٠  \n - يعتبر مستوى درجة الحرارة معتدل إذا كان أعلى من أو يساوي ١٠ وأقل من ٢٨ \n  - يعتبر مستوى درجة الحرارة حار إذا كان أعلى من أو يساوي ٢٨',
-                      textAlign: TextAlign.center,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
                   ),
-                // temp
-                if (type == 2)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      ' - يعتبر مستوى الرطوبة منخفض إذا كان أقل من ٣٠  \n - يعتبر مستوى الرطوبة متوسط إذا كان أعلى من أو يساوي ٣٠ وأقل من أو يساوي ٦٠  \n  - يعتبر مستوى الرطوبة عالي إذا كان أعلى من ٦٠',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                // CO2
-                if (type == 3)
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      'يمكن أن تؤثر المستويات العالية من ثاني أكسيد الكربون في الهواء الداخلي سلبًا على جودة الهواء وقد تضر بصحة الإنسان. \n تشمل الأعراض الشائعة المرتبطة بارتفاع مستويات ثاني أكسيد الكربون الصداع والتعب والغثيان والإغماء.  \n - يعتبر مستوى ثاني أكسيد الكربون ممتاز إذا كان اقل من أو يساي ١٠٠٠  \n - يعتبر مستوى ثاني أكسيد الكربون ملوث إذا كان أعلى من ١٠٠٠ وأقل من ١٥٠٠ \n  - يعتبر مستوى ثاني أكسيد الكربون ملوث جدًا إذا كان أعلى من أو يساوي ١٥٠٠',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
+                ),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(

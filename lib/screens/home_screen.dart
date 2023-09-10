@@ -4,6 +4,7 @@ import 'package:naqi_app/screens/indoor_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:naqi_app/screens/profile_screen.dart';
+import 'package:naqi_app/firebase.dart';
 
 class HomeSceen extends StatefulWidget {
   const HomeSceen({super.key});
@@ -14,6 +15,10 @@ class HomeSceen extends StatefulWidget {
 
 class _HomeSceenState extends State<HomeSceen>
     with AutomaticKeepAliveClientMixin {
+  FirebaseService firebaseService = FirebaseService();
+  profilePage ProfilePage = profilePage();
+  IndoorPage indoorPage = IndoorPage();
+
   @override
   void initState() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -22,10 +27,8 @@ class _HomeSceenState extends State<HomeSceen>
       }
     });
     super.initState();
+    firebaseService.getUserInfo();
   }
-
-  profilePage ProfilePage = profilePage();
-  IndoorPage indoorPage = IndoorPage();
 
   int index = 1;
   late final pages = [

@@ -10,6 +10,7 @@ import 'package:naqi_app/fan.dart';
 
 void main() async {
   Fan fan = Fan();
+
   fan.setUpController();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
