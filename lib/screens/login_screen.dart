@@ -37,23 +37,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    subscription.cancel();
+   // subscription.cancel();
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
   }
 
-  late StreamSubscription subscription;
+  /*late StreamSubscription subscription;
   var isDeviceConnected = false;
-  bool isAlertSet = false;
+  bool isAlertSet = false;*/
 
   @override
   void initState() {
-    getConnectivity();
+   // getConnectivity();
     super.initState();
   }
 
-  getConnectivity() =>
+ /* getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
           isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() => isAlertSet = true);
           }
         },
-      );
+      );*/
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  showDialogBox() => showCupertinoDialog<String>(
+ /* showDialogBox() => showCupertinoDialog<String>(
         context: context,
         builder: (BuildContext content) => CupertinoAlertDialog(
           title: Text('لا يوجد اتصال بالانترنت'),
@@ -270,5 +270,5 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-      );
+      );*/
 }
