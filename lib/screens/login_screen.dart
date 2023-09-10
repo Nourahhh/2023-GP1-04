@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:naqi_app/screens/forgot_pw_reset.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -66,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var child;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Form(
@@ -148,6 +150,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         return 'ادخل كلمة المرور';
                       }
                     },
+                  ),
+                ),
+
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          var push = Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return forgotPasswordPage();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'هل نسيت كلمة المرور؟',
+                          style: GoogleFonts.robotoCondensed(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -234,6 +265,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  get child2 => child2;
+
+  get child1 => child2;
 
   Widget togglePassword() {
     return IconButton(
