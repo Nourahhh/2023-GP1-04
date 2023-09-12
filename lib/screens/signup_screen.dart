@@ -49,7 +49,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool validateStructure(String value) {
     String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~-_]).{8,}$';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(value);
   }
@@ -235,7 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 77),
                     child: Text(
-                      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة \n - رمز واحد على الأقل مثل@#%&*',
+                      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة \n - رمز واحد على الأقل مثل@#%-&*_',
                       style: GoogleFonts.robotoCondensed(fontSize: 14),
                     ),
                   ),

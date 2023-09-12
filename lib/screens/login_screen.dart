@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                         child: Text(
-                          'هل نسيت كلمة المرور؟',
+                          'هل نسيت كلمةالمرور؟',
                           style: GoogleFonts.robotoCondensed(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,
