@@ -27,7 +27,7 @@ class Controller {
           // check CO2 and fan status and switch status
         } else if ((co2 <= 1000) & (status == '1') & (isSwitchOn == '0')) {
           fan.turnOff();
-          sendNotification(" مستوى ثاني أكسيد الكربون جيد! سيتم ايقاف المروحة");
+          sendNotification("مستوى ثاني أكسيد الكربون جيد! سيتم ايقاف المروحة");
         }
       });
     });

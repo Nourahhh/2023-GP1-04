@@ -27,7 +27,7 @@ class _forgotPasswordPageState extends State<forgotPasswordPage> {
         builder: (context) {
           return AlertDialog(
             content: Text(
-                'لقد تم إرسال رابط إعادة تعيين كلمةالمرور! قم بفحص ايميلك '),
+                'لقد تم إرسال رابط إعادة تعيين كلمة المرور! قم بفحص ايميلك '),
           );
         },
       );

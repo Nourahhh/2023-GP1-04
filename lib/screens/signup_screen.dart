@@ -235,7 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 77),
                     child: Text(
-                      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة \n - رمز واحد على الأقل مثل@#%-&*_',
+                      'يجب ان تحتوى كلمة المرور على:\n- ثمانية خانات تحتوي على رقم واحد على الأقل\n- أحرف كبيرة وأحرف صغيرة \n - رمز واحد على الأقل مثل@_#%-&*',
                       style: GoogleFonts.robotoCondensed(fontSize: 14),
                     ),
                   ),
