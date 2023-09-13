@@ -59,18 +59,18 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _isSourcePaasword = true;
   bool _isSourceConfirPaasword = true;
 
-// to connection
+/* to connection
   late StreamSubscription subscription;
   var isDeviceConnected = false;
-  bool isAlertSet = false;
+  bool isAlertSet = false; */
 
   @override
   void initState() {
-    getConnectivity();
+   // getConnectivity();
     super.initState();
   }
 
-  getConnectivity() =>
+ /* getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
         (ConnectivityResult result) async {
           isDeviceConnected = await InternetConnectionChecker().hasConnection;
@@ -79,11 +79,11 @@ class _SignupScreenState extends State<SignupScreen> {
             setState(() => isAlertSet = true);
           }
         },
-      );
+      );*/
 
   @override
   void dispose() {
-    subscription.cancel();
+   // subscription.cancel();
     super.dispose();
     _firstNameContoroller.dispose();
     _lasttNameContoroller.dispose();
@@ -422,7 +422,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  showDialogBox() => showCupertinoDialog<String>(
+  /*showDialogBox() => showCupertinoDialog<String>(
         context: context,
         builder: (BuildContext content) => CupertinoAlertDialog(
           title: Text('لا يوجد اتصال بالانترنت'),
@@ -443,5 +443,5 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ],
         ),
-      );
+      );*/
 }

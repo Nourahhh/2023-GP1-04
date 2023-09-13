@@ -7,6 +7,10 @@ import 'package:naqi_app/screens/signup_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:naqi_app/fan.dart';
+import 'package:naqi_app/screens/profile_screen.dart';
+import 'package:naqi_app/screens/indoor_screen.dart';
+import 'package:naqi_app/screens/devices_screen.dart';
+import 'package:naqi_app/screens/healthStatus_screen.dart';
 
 void main() async {
   Fan fan = Fan();
@@ -54,6 +58,10 @@ class MyApp extends StatelessWidget {
         'homeScreen': (context) => const HomeSceen(),
         'signupScreen': (context) => const SignupScreen(),
         'loginScreen': (context) => const LoginScreen(),
+        'profilePage': (context) => profilePage(),
+        'indoorScreen': (context) => IndoorPage(),
+        'devicesScreen': (context) => DevicesPage(),
+        'healthStatusScreen': (context) => healthStatusPage(),
       },
     );
   }
