@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:naqi_app/screens/indoor_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:naqi_app/screens/profile_screen.dart';
+import 'package:naqi_app/screens/settings_screen.dart';
 import 'package:naqi_app/firebase.dart';
 
 class HomeSceen extends StatefulWidget {
@@ -16,7 +16,7 @@ class HomeSceen extends StatefulWidget {
 class _HomeSceenState extends State<HomeSceen>
     with AutomaticKeepAliveClientMixin {
   FirebaseService firebaseService = FirebaseService();
-  profilePage ProfilePage = profilePage();
+  SettingsPage settingsPage = SettingsPage();
   IndoorPage indoorPage = IndoorPage();
 
   @override
@@ -33,7 +33,7 @@ class _HomeSceenState extends State<HomeSceen>
   int index = 1;
   late final pages = [
     //هنا صفحة حسابي
-    ProfilePage,
+    settingsPage,
     //هنا صفحة داخلي
     indoorPage,
     //هنا صفحة خارجي
