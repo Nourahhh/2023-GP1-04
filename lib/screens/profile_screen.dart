@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:naqi_app/firebase.dart';
-import 'package:naqi_app/indoorAirQuality.dart';
+//import 'package:naqi_app/indoorAirQuality.dart';
 
 class profilePage extends StatefulWidget {
   profilePage({Key? key}) : super(key: key);
@@ -13,19 +13,11 @@ class profilePage extends StatefulWidget {
 }
 
 class _profilePageState extends State<profilePage> {
-  IndoorAirQuality indoorAirQuality = IndoorAirQuality();
-  var newValue1;
-  var newValue2;
-
-  // Initial Selected Value
-  String dropdownvalue = FirebaseService.healthStatusLevel;
-
-  // List of items in our dropdown menu
-  var items = [
-    'خفيف',
-    'متوسط',
-    'شديد',
-  ];
+  //IndoorAirQuality indoorAirQuality = IndoorAirQuality();
+  String originalFirstName = FirebaseService.first_name ?? "";
+  String originalLastName = FirebaseService.last_name ?? "";
+  bool changesMade = false; // Add a boolean variable to track changes
+  bool isButtonEnabled = false; // Add a boolean variable to track button state
 
   @override
   void initState() {
@@ -51,18 +43,12 @@ class _profilePageState extends State<profilePage> {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            child: Text(
-              'المعلومات الشخصية',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -73,72 +59,51 @@ class _profilePageState extends State<profilePage> {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height: 1),
+                      SizedBox(
+                          height:
+                              5), // Adjusted the SizedBox height for better spacing
+
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.grey,
                             width: 1.0,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderRadius: BorderRadius.circular(
+                              8.0), // Simplified BorderRadius
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(FirebaseService.first_name ?? ""),
-                          trailing: Icon(Icons.edit),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('تعديل الاسم الأول'),
-                                content: TextField(
-                                  controller: TextEditingController(
-                                      text: FirebaseService.first_name),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      newValue1 = value;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: 'الاسم الأول',
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'إلغاء',
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      if (newValue1 != null &&
-                                          newValue1.isNotEmpty) {
-                                        updateInfo('firstName', newValue1);
-                                        FirebaseService.first_name = newValue1;
-                                      }
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'حفظ',
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                          title: TextFormField(
+                            initialValue:
+                                originalFirstName, // Use the original value
+                            onChanged: (newValue) {
+                              setState(() {
+                                originalFirstName =
+                                    newValue; // Update the original value locally
+                                changesMade =
+                                    true; // Set changesMade to true when changes are made
+                                isButtonEnabled = true;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none, // Hide the underline
+                            ),
+                            textDirection: TextDirection
+                                .rtl, // Force right-to-left direction
+                            textAlign:
+                                TextAlign.start, // Align to the start (left)
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+
+                SizedBox(height: 16),
+
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,79 +114,57 @@ class _profilePageState extends State<profilePage> {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height: 1),
+                      SizedBox(
+                          height:
+                              5), // Adjusted the SizedBox height for better spacing
+
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.grey,
                             width: 1.0,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          borderRadius: BorderRadius.circular(
+                              8.0), // Simplified BorderRadius
                         ),
                         child: ListTile(
                           leading: Icon(Icons.person),
-                          title: Text(FirebaseService.last_name ?? ""),
-                          trailing: Icon(Icons.edit),
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('تعديل الاسم الأخير'),
-                                content: TextField(
-                                  controller: TextEditingController(
-                                      text: FirebaseService.last_name),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      newValue2 = value;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: 'الاسم الأخير',
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'إلغاء',
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      if (newValue2 != null &&
-                                          newValue2.isNotEmpty) {
-                                        updateInfo('lastName', newValue2);
-                                        FirebaseService.last_name = newValue2;
-                                      }
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'حفظ',
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                          title: TextFormField(
+                            initialValue:
+                                originalLastName, // Use the original value
+                            onChanged: (newValue) {
+                              setState(() {
+                                originalLastName =
+                                    newValue; // Update the original value locally
+                                changesMade =
+                                    true; // Set changesMade to true when changes are made
+                                isButtonEnabled = true;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none, // Hide the underline
+                            ),
+                            textDirection: TextDirection
+                                .rtl, // Force right-to-left direction
+                            textAlign:
+                                TextAlign.start, // Align to the start (left)
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+
+                SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('البريد الإلكتروني',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 1),
+                      SizedBox(height: 5),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -244,177 +187,74 @@ class _profilePageState extends State<profilePage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0, left: 20),
-                  child: Divider(
-                    color: Colors.grey[800], // Set the color to dark gray
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('هل تعاني من ظروف صحية تنفسية؟',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          Switch(
-                            activeColor:
-                                const Color.fromARGB(255, 255, 255, 255),
-                            activeTrackColor: const Color(0xff45A1B6),
-                            inactiveThumbColor: Colors.blueGrey.shade600,
-                            inactiveTrackColor: Colors.grey.shade400,
-                            splashRadius: 50.0,
-                            value: FirebaseService.healthStatus,
-                            onChanged: (value) => setState(() {
-                              FirebaseService.healthStatus =
-                                  !FirebaseService.healthStatus;
-                              updateInfo(
-                                  'healthStatus', FirebaseService.healthStatus);
-                              if (!FirebaseService.healthStatus)
-                                updateInfo('healthStatusLevel', 'خفيف');
-                              dropdownvalue = 'خفيف';
-                              // FirebaseService.healthStatus = value;
-                            }),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 1),
-                    ],
-                  ),
-                ),
-                if (FirebaseService.healthStatus == true)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('مستوى الحالة الصحية',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            indoorAirQuality.infoWidget(context, ''),
-                          ],
-                        ),
-                        SizedBox(height: 1),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1.0,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0)),
-                          ),
-                          child: ListTile(
-                            leading: Icon(Icons.health_and_safety),
-                            title: DropdownButtonFormField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none, // Remove the border
-                                contentPadding:
-                                    EdgeInsets.zero, // Remove padding
-                              ),
+                SizedBox(height: 30),
+                // Adjusted the SizedBox height for better spacing
+                ElevatedButton(
+                  onPressed:
+                      isButtonEnabled // Enable the button based on the isButtonEnabled variable
+                          ? () {
+                              if (originalFirstName != null &&
+                                  originalFirstName.isNotEmpty) {
+                                FirebaseService.first_name = originalFirstName;
+                                updateInfo('firstName', originalFirstName);
+                              }
 
-                              // Initial Value
-                              value: dropdownvalue,
-                              // Down Arrow Icon
-                              icon: const Icon(Icons.keyboard_arrow_down),
+                              if (originalLastName != null &&
+                                  originalLastName.isNotEmpty) {
+                                FirebaseService.last_name = originalLastName;
+                                updateInfo('lastName', originalLastName);
+                              }
 
-                              // Array list of items
-                              items: items.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(
-                                    items,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                              // After selecting the desired option,it will
-                              // change button value to selected value
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownvalue = newValue!;
-                                  FirebaseService.healthStatusLevel =
-                                      dropdownvalue;
-                                  updateInfo('healthStatusLevel',
-                                      FirebaseService.healthStatusLevel);
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                              // After updating Firestore, show a success message
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  isButtonEnabled =
+                                      false; // Disable the button when the dialog is displayed
+                                  return AlertDialog(
+                                    title: Text(
+                                        'تم الحفظ بنجاح'), // Success message in Arabic
+                                    content: Text(
+                                        'تم حفظ التغييرات بنجاح.'), // Success message in Arabic
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          isButtonEnabled =
+                                              true; // Enable the button after closing the dialog
+                                        },
+                                        style: TextButton.styleFrom(
+                                          primary: Colors
+                                              .blue, // Set the text color of the OK button to blue
+                                        ),
+                                        child: Text(
+                                            'حسنًا'), // OK button in Arabic
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          : null, // Set onPressed to null to disable the button when it's not enabled
+                  child: Text(
+                    'حفظ التغييرات', // Button text in Arabic
+                    style: TextStyle(
+                      color: isButtonEnabled
+                          ? Colors.white
+                          : Colors.grey[700], // Conditional text color
                     ),
                   ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.only(right: 30.0, left: 30),
-            child: Divider(
-              color: Colors.grey[800], // Set the color to dark gray
-            ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            child: ElevatedButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                          title: Text('رسالة تأكيد'),
-                          content: Text('هل تريد بالفعل تسجيل الخروج؟'),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'لا',
-                                  style: GoogleFonts.robotoCondensed(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                )),
-                            TextButton(
-                              onPressed: () {
-                                FirebaseAuth.instance.signOut();
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(
-                                'نعم',
-                                style: GoogleFonts.robotoCondensed(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ));
-              },
-              child: Text(
-                'تسجيل الخروج',
-                style: GoogleFonts.robotoCondensed(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 43, 138, 159),
+                    // Set the background color of the button
+                     shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+         // Adjust the radius to match the container
+      ),
+                  ),
                 ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 43, 138, 159)),
-              ),
+              ],
             ),
           ),
         ],
