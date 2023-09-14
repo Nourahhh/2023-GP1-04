@@ -175,6 +175,7 @@ class _healthStatusPageState extends State<healthStatusPage> {
                   ],
                 ),
               ),
+              SizedBox(height: 100),
             ],
           ),
         )),
