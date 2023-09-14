@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:naqi_app/firebase.dart';
+
+import '../indoorAirQuality.dart';
 //import 'package:naqi_app/indoorAirQuality.dart';
 
 class profilePage extends StatefulWidget {
@@ -13,8 +15,8 @@ class profilePage extends StatefulWidget {
 }
 
 class _profilePageState extends State<profilePage> {
-  //IndoorAirQuality indoorAirQuality = IndoorAirQuality();
-  String originalFirstName = FirebaseService.first_name ?? "";
+ IndoorAirQuality indoorAirQuality = IndoorAirQuality();
+String originalFirstName = FirebaseService.first_name ?? "";
   String originalLastName = FirebaseService.last_name ?? "";
   bool changesMade = false; // Add a boolean variable to track changes
   bool isButtonEnabled = false; // Add a boolean variable to track button state
@@ -39,15 +41,24 @@ class _profilePageState extends State<profilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Padding(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          ' المعلومات الشخصية ',
+          style: TextStyle(fontSize: 18),
+        ),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,11 +265,10 @@ class _profilePageState extends State<profilePage> {
       ),
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
-        ],
+        )),
       ),
-    ));
+    );
   }
 }
