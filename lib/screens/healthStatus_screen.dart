@@ -280,14 +280,6 @@ class _healthStatusPageState extends State<healthStatusPage> {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16),
-                        child: Divider(
-                          color: Colors.grey, // Specify the color of the line
-                          height: 1.0, // Specify the height of the line
-                          thickness: 0.50, // Specify the thickness of the line
-                        ),
-                      ),
                     ],
                   ),
                 ),
