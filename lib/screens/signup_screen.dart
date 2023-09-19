@@ -592,7 +592,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                             'firstName': firstName,
                                             'lastName': lastName,
                                             'userEmail': userEmail,
-                                            'healthStatus': text,
+                                            'healthStatus':
+                                                text == 'نعم' ? true : false,
                                             'healthStatusLevel': text1,
                                           }),
                                           // ignore: avoid_print
